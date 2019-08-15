@@ -1,29 +1,36 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
-import auth from '../services/auth-service';
+import withAuth from '../components/withAuth.js';
+
 
 class Signup extends Component {
-
   state = {
     username: '',
     password: '',
+    error: '',
+    message: '',
   };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
     const username = this.state.username;
     const password = this.state.password;
-
-    auth.signup({ username, password })
-      .then( (user) => {
-        console.log(user)
-        this.setState({
-            username: '',
-            password: '',
-        });
+    
+    this.props.signup({ username, password })
+    .then( (user) => {
+      this.setState({
+          username: '',
+          password: '',
+      });
+    })
+    .catch( error => 
+      { this.setState({
+        error: 'error'
       })
-      .catch( error => console.log(error) )
+        console.log(this.props);
+        console.log(error);}
+    )
   }
 
   handleChange = (event) => {  
@@ -32,7 +39,7 @@ class Signup extends Component {
   }
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, error, message } = this.state;
     return (
       <>
         <form onSubmit={this.handleFormSubmit}>
@@ -43,6 +50,8 @@ class Signup extends Component {
           <input type='submit' value='Signup' />
         </form>
 
+        {message ? <p>{error}</p> : null }
+
         <p>Already have account? 
           <Link to={'/login'}> Login</Link>
         </p>
@@ -52,4 +61,5 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default withAuth(Signup);
+

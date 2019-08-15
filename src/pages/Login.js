@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import auth from '../services/auth-service';
+import withAuth from '../components/withAuth.js';
 
 class Login extends Component {
   state = {
@@ -13,7 +13,7 @@ class Login extends Component {
     event.preventDefault();
     const { username, password } = this.state
 
-    auth.login({ username, password })
+    this.props.login({ username, password })
     .then( (user) => {
       console.log(user)
     })
@@ -45,4 +45,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withAuth(Login);
