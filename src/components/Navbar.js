@@ -11,28 +11,28 @@ class Navbar extends Component {
         {this.props.isLoggedIn ? ( 
           <nav className={classNavbar}>
             <Link to='/main'>
-              <div>
-                <img src='' alt=''/>
+              <div className='wrapper-img icon-shadow'>
+                <img src={process.env.PUBLIC_URL + '/images/dogjoy-home-icon.png'} alt='home icon'/>
               </div>
-              <p>Home</p>
+              {/* <p>Home</p> */}
             </Link>
             <Link to='/search'>
-              <div>
-                <img src='' alt=''/>
+              <div className='wrapper-img icon-shadow'>
+                <img src={process.env.PUBLIC_URL + './images/dogjoy-search-icon.png'} alt='search icon'/>
               </div>
-              <p>Search</p>
+              {/* <p>Search</p> */}
             </Link>
             <Link to='/favourites'>
-              <div>
-                <img src='' alt=''/>
+              <div className='wrapper-img icon-shadow'>
+               <img src={process.env.PUBLIC_URL + './images/dogjoy-favourites-icon.png'} alt='favourites icon'/>
               </div>
-              <p>Favourites</p>
+              {/* <p>Favourites</p> */}
             </Link>
             <Link to='/settings'>
-              <div>
-                <img src='' alt=''/>
+              <div className='wrapper-img icon-shadow'>
+                <img src={process.env.PUBLIC_URL + './images/dogjoy-profile-icon.png'} alt='profile icon'/>
               </div>
-              <p>Profile</p>
+              {/* <p>Profile</p> */}
             </Link>
             
           </nav>

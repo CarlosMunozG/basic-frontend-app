@@ -5,16 +5,19 @@
   "dependencies": {
     "axios": "^0.19.0",
     "deck.gl": "^7.2.1",
+    "firebase": "^6.4.0",
     "formik": "^1.5.8",
     "mapbox-gl": "^1.2.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-firebase-file-uploader": "^2.4.2",
     "react-map-gl": "^5.0.10",
     "react-map-gl-geocoder": "^2.0.9",
     "react-mapbox-gl": "^4.6.0",
     "react-mapbox-gl-geocoder": "^1.0.3",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.0",
+    "react-select": "^3.0.4",
     "yup": "^0.27.0"
   },
   "scripts": {

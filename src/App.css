@@ -13,26 +13,84 @@ body {
   padding: 0;
 }
 
+/* ----- colors -------- */
+
+:root {
+  --main-color: #777;
+  --second-color: #EAA01C;
+}
+
 
 /* ---- typography ---- */
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap');
+
 body {
-  color: #111;
-  font-family: Helvetica, Arial, sans-serif;
+  color: var(--main-color);
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 147%;
 }
 
-h1 {}
+h1, h2, h3, h4, h5, h6, p{
+  color: var(--main-color);
+  margin:0;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 25px;
+  padding: 50px 0 0 0;
+  text-align:center;
+}
 
 h2 {}
 
-h3 {}
-
-p {
-  margin: 0;
+h3 {
+  font-weight: 300;
+  font-size: 20px;
+  padding: 5px 0;
 }
 
+p {
+  font-size: 14px;
+}
+
+
+/* ------ general ------ */
+
+section{
+  width: 100%;
+  height: 100vh;
+}
+
+a{
+  text-decoration: none;
+}
+
+img{
+  width: 100%;
+  height: auto;
+}
+
+.wrapper-img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.icon-shadow{
+  -webkit-box-shadow: 0px 12px 34px -10px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 12px 34px -10px rgba(0,0,0,0.75);
+  box-shadow: 0px 12px 34px -10px rgba(0,0,0,0.75);
+}
+
+.big-shadow{
+  -webkit-box-shadow: 0px -1px 34px -13px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px -1px 34px -13px rgba(0,0,0,0.75);
+  box-shadow: 0px -1px 34px -13px rgba(0,0,0,0.75)
+}
 
 
 /* ---- layout ---- */
@@ -72,6 +130,8 @@ p {
 
 
 
+
+
 /* ---- components ---- */
 
 .button {
@@ -86,6 +146,48 @@ p {
   background-color: #fff;
 }
 
+.go-back-button{
+  position: fixed;
+}
+
+.go-back-button div{
+  width: 50px;
+  height:50px;
+  margin:35px 0 0 18px;
+}
+
+.go-back-button img{
+  width:15px;
+}
+
+.logout{
+  background-color: var(--second-color);
+  padding: 10px 20px;
+  margin:40px auto;
+  color: white;
+  font-size: 16px;
+  border-radius: 20px;
+  text-align: center;
+  width:100px;
+  display:block;
+  border:none;
+}
+
+.arrow{
+  width: 10px;
+  margin-top:-15px;
+}
+
+.reverse{
+  transform: rotate(180deg);
+}
+
+.oposite{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* ---- section ---- */
 
 
@@ -98,19 +200,22 @@ section.testimonials .button {
   padding:0;
 }
 
-
-
 nav{
   position: fixed;
   height: 100px;
   width: 100%;
-  background-color: aqua;
+  background-color:white;
   margin:0;
   padding:0;
   z-index:10;
-
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   display:flex;
   justify-content: space-evenly;
+  align-items: center;
+  -webkit-box-shadow: 0px 12px 34px -13px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 12px 34px -13px rgba(0,0,0,0.75);
+  box-shadow: 0px 12px 34px -13px rgba(0,0,0,0.75)
 }
 
 nav.is-private-navbar{
@@ -121,7 +226,38 @@ nav.is-public-navbar{
   top:0;
 }
 
+nav a div{
+  width: 40px;
+  height: 40px;
+  border-radius:20px;
+  margin-top:-5px;
+}
+
+
 .map-view{
   width:300px;
   height:50vh;
 }
+
+section.settings header{
+  width:100%;
+  height: 20vh;
+}
+
+section.settings section{
+  height: auto;
+}
+
+section.settings section a{
+  width:80%;
+  height:auto;
+  margin: 20px 10%;
+  border-bottom: 1px solid #dfdede;
+}
+
+section.settings section a div p{
+  color: var(--second-color);
+  padding: 0 0 20px 0;
+}
+
+

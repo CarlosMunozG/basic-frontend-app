@@ -2,7 +2,6 @@ import "mapbox-gl/dist/mapbox-gl.css"
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css"
 import React, { Component } from 'react'
 import MapGL from "react-map-gl";
-import DeckGL, { GeoJsonLayer } from "deck.gl";
 import Geocoder from "react-map-gl-geocoder";
 
 const token='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
@@ -34,19 +33,6 @@ class SearchableMap extends Component {
     });
   };
 
-  handleOnResult = event => {
-    this.setState({
-      searchResultLayer: new GeoJsonLayer({
-        id: "search-result",
-        data: event.result.geometry,
-        getFillColor: [255, 0, 0, 128],
-        getRadius: 1000,
-        pointRadiusMinPixels: 10,
-        pointRadiusMaxPixels: 10
-      })
-    })
-  }
-
     render(){
       const { viewport, searchResultLayer} = this.state
       return (
@@ -69,7 +55,6 @@ class SearchableMap extends Component {
                 position='top-left'
               />
             </MapGL>
-            <DeckGL {...viewport} layers={[searchResultLayer]} />
         </div>
       )
     }

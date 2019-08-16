@@ -9,7 +9,11 @@ class GoBackButton extends Component {
 
   render() {
     return (
-      <button className='go-back-button' onClick={this.goToPreviousPage}>Go Back</button>
+      <button className='go-back-button' onClick={this.goToPreviousPage}>
+        <div className='wrapper-img reverse'>
+          <img src='./images/arrow.png' alt='go back arrow'/>
+        </div>
+      </button>
     )
   }
 }

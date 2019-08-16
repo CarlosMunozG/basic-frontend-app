@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import firebase from "firebase";
 
 import AuthProvider from './context/AuthContext.js';
 
@@ -14,6 +15,7 @@ import Login from './pages/Login.js';
 import Main from './pages/private/Main.js';
 import Settings from './pages/private/Settings.js';
 import Profile from './pages/private/Profile.js';
+import ProfileEdit from './pages/private/ProfileEdit.js';
 import MyPlaces from './pages/private/MyPlaces.js';
 import MyOpinions from './pages/private/MyOpinions.js';
 import Places from './pages/private/Places.js';
@@ -21,6 +23,16 @@ import AddPlace from './pages/private/AddPlace.js';
 import Search from './pages/private/Search.js';
 
 import './App.css';
+
+ 
+const config = {
+  apiKey: "AIzaSyBDHKkhIfUvbj86gaIQKnLrOD5eD8xa-w4",
+  authDomain: "dogjoy-e8a5d.firebaseapp.com",
+  storageBucket: "gs://dogjoy-e8a5d.appspot.com"
+};
+firebase.initializeApp(config);
+
+
 
 class App extends Component {
   render() {
@@ -37,6 +49,7 @@ class App extends Component {
               <PrivateRoute path="/search" exact component={Search} />
               <PrivateRoute path="/settings" exact component={Settings} />
               <PrivateRoute path="/settings/profile" exact component={Profile} />
+              <PrivateRoute path="/settings/profile/edit" exact component={ProfileEdit} />
               <PrivateRoute path="/settings/my-places" exact component={MyPlaces} />
               <PrivateRoute path="/settings/my-opinions" exact component={MyOpinions} />
               <PrivateRoute path="/places" exact component={Places} />
