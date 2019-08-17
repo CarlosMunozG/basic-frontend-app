@@ -1,69 +1,61 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import withAuth from '../../components/withAuth.js';
-import mapbox from '../../services/mapbox-services.js'
+import userService from '../../services/users-services.js';
 
 
 class Private extends Component {
   state = {
-    location: '',
+    username: '',
+    images: [],
   }
 
   componentDidMount() {
-    mapbox.getPlacesNearUser()
+    userService.getCurrentUser()
     .then((response) => {
-      console.log(response);
-      const cardsFromAPI = response.data.cards;
+      const user = response.data.newUser;
       this.setState({
-        cards: cardsFromAPI
+        username: user.username,
+        images: user.images,
       })
     })
     .catch((error) =>{
       console.log(error);
     })
-  }
-
-  handleFormSubmit = (event) => {
-    event.preventDefault();
-    const { username, password } = this.state
-
-    mapbox.getPlacesNearUser()
-    .then((response) => {
-      console.log(response);
-      const cardsFromAPI = response.data.cards;
-      this.setState({
-        cards: cardsFromAPI
-      })
-    })
-    .catch((error) =>{
-      console.log(error);
-    })
-  }
-
-  getPlacesNearUser(){
-    // const userLocation = user.location.type;
-    // return this.mapbox.post(`/${userLocation}.json`)
-    return this.mapbox.post(`/barcelona.json`)
-      .then(({ data }) => data);
-  }
-
-
-
-  handleChange = (event) => {  
-    const {name, value} = event.target;
-    this.setState({[name]: value});
   }
 
   render() {
-  
+    const { username, images } = this.state;
     return (
-      <div>
-        <h1>Welcome {this.props.user.username}</h1>
-        {/* <form onSubmit={this.handleFormSubmit}>
-          <label htmlFor='username' >Insert a city</label>
-          <input id='username' type='text' name='username' value={username} onChange={this.handleChange}/>
-          <button type='submit'>Search</button>
-        </form> */}
-      </div>
+      <section className='main'>
+        <header>
+          <h1>Welcome {username}</h1>
+          {/* What do Bobby wanna do? poner el nombre de la mascota cuando lo tenga */}
+          <p>What do your pet wanna do?</p>
+        </header>
+        <section>
+          {images.length > 0 ? null: (
+            <Link to='settings/profile/edit'className='button-main normal-shadow'>
+              <div className='wrapper-img'>
+                {/* <img src='' alt=''/> */}
+              </div>
+              <p>Complete Profile</p>
+            </Link>
+          )}
+          <Link to='/search-places' className='button-main normal-shadow'>
+            <div className='wrapper-img'>
+              {/* <img src='' alt=''/> */}
+            </div>
+            <p>Find places</p>
+          </Link>
+          <Link to='' className='button-main normal-shadow'>
+            <div className='wrapper-img'>
+              {/* <img src='' alt=''/> */}
+            </div>
+            <p>Find events</p>
+          </Link>
+        </section>
+      </section>
     )
   }
 }

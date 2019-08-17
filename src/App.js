@@ -19,8 +19,10 @@ import ProfileEdit from './pages/private/ProfileEdit.js';
 import MyPlaces from './pages/private/MyPlaces.js';
 import MyOpinions from './pages/private/MyOpinions.js';
 import Places from './pages/private/Places.js';
+import Place from './pages/private/Place.js';
+import PlacesList from './pages/private/PlacesList.js';
 import AddPlace from './pages/private/AddPlace.js';
-import Search from './pages/private/Search.js';
+import SearchPlaces from './pages/private/SearchPlaces.js';
 
 import './App.css';
 
@@ -46,13 +48,15 @@ class App extends Component {
               <AnonRoute path="/signup" exact component={Signup} />
               <AnonRoute path="/login" exact component={Login} />
               <PrivateRoute path="/main" exact component={Main} />
-              <PrivateRoute path="/search" exact component={Search} />
+              <PrivateRoute path="/search-places" exact component={SearchPlaces} />
               <PrivateRoute path="/settings" exact component={Settings} />
               <PrivateRoute path="/settings/profile" exact component={Profile} />
               <PrivateRoute path="/settings/profile/edit" exact component={ProfileEdit} />
               <PrivateRoute path="/settings/my-places" exact component={MyPlaces} />
               <PrivateRoute path="/settings/my-opinions" exact component={MyOpinions} />
               <PrivateRoute path="/places" exact component={Places} />
+              <PrivateRoute path="/places-list" exact component={PlacesList} />
+              <PrivateRoute path="/places/:id" exact component={Place} />
               <PrivateRoute path="/places/add" exact component={AddPlace} />
               <PrivateRoute path="/settings" exact component={Settings} />
               <Route component={NotFound} />

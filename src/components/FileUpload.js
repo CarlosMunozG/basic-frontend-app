@@ -43,6 +43,7 @@ class FileUploadComponent extends Component {
           accept="image/*"
           name="avatar"
           randomizeFilename
+          multiple
           storageRef={firebase.storage().ref("images")}
           onUploadStart={this.handleUploadStart}
           onUploadError={this.handleUploadError}

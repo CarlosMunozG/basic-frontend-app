@@ -8,7 +8,7 @@ class ProfileEdit extends Component {
   state = {
     username: '',
     password: '',
-    image: '',
+    images: [],
     location: '',
     email: '',
     id: '',
@@ -22,7 +22,7 @@ class ProfileEdit extends Component {
       this.setState({
         username: user.username,
         password: '12345678',
-        image: user.image,
+        images: user.images,
         location: user.location,
         email: user.email,
         id: user._id,
@@ -34,9 +34,7 @@ class ProfileEdit extends Component {
   }
 
   handleFormSubmit = (event) => {
-    const {username, password, image, location, email} = this.state;
     event.preventDefault();
-    console.log('hola', this.state);
     user.updateUser(this.state)
     .then( (user) => {
       this.setState({
@@ -52,9 +50,12 @@ class ProfileEdit extends Component {
       [name]: value,
     });
   }
+  
   getImage = (url) => {
+    const { images } = this.state
+    images.push(url)
     this.setState({
-      image: url
+      images,
     })
   }
 

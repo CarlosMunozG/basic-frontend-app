@@ -14,25 +14,21 @@ class Navbar extends Component {
               <div className='wrapper-img icon-shadow'>
                 <img src={process.env.PUBLIC_URL + '/images/dogjoy-home-icon.png'} alt='home icon'/>
               </div>
-              {/* <p>Home</p> */}
             </Link>
             <Link to='/search'>
               <div className='wrapper-img icon-shadow'>
-                <img src={process.env.PUBLIC_URL + './images/dogjoy-search-icon.png'} alt='search icon'/>
+                <img src={process.env.PUBLIC_URL + '/images/dogjoy-search-icon.png'} alt='search icon'/>
               </div>
-              {/* <p>Search</p> */}
             </Link>
             <Link to='/favourites'>
               <div className='wrapper-img icon-shadow'>
-               <img src={process.env.PUBLIC_URL + './images/dogjoy-favourites-icon.png'} alt='favourites icon'/>
+               <img src={process.env.PUBLIC_URL + '/images/dogjoy-favourites-icon.png'} alt='favourites icon'/>
               </div>
-              {/* <p>Favourites</p> */}
             </Link>
             <Link to='/settings'>
               <div className='wrapper-img icon-shadow'>
-                <img src={process.env.PUBLIC_URL + './images/dogjoy-profile-icon.png'} alt='profile icon'/>
+                <img src={process.env.PUBLIC_URL + '/images/dogjoy-profile-icon.png'} alt='profile icon'/>
               </div>
-              {/* <p>Profile</p> */}
             </Link>
             
           </nav>

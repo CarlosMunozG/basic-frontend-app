@@ -11,7 +11,7 @@ class GoBackButton extends Component {
     return (
       <button className='go-back-button' onClick={this.goToPreviousPage}>
         <div className='wrapper-img reverse'>
-          <img src='./images/arrow.png' alt='go back arrow'/>
+          <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='go back arrow'/>
         </div>
       </button>
     )

@@ -9,7 +9,7 @@ class Profile extends Component {
   state = {
     username: '',
     password: '',
-    image: '',
+    images: '',
     location: '',
   }
 
@@ -20,7 +20,7 @@ class Profile extends Component {
       this.setState({
         username: user.username,
         password: user.password,
-        image: user.image,
+        images: user.images,
         location: user.location,
       })
     })
@@ -30,7 +30,7 @@ class Profile extends Component {
   }
 
   render(){
-    const { username, password, image, location, _id } = this.state;
+    const { username, password, images, location } = this.state;
      return (
       <div>
         <h1>Profile</h1>
@@ -38,7 +38,7 @@ class Profile extends Component {
         <section>
           <p>{username}</p>
           <p>{password}</p>
-          <p>{image}</p>
+          <p>{images}</p>
           <p>{location}</p>
           <p>{username}</p>
           <p>{username}</p>

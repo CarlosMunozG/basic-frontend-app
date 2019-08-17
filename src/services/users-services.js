@@ -18,6 +18,7 @@ class UserService {
     return this.user.put(`/users/${id}/update`, { user })
       .then(({ data }) => data);
   }
+
 }
 
 const userService = new UserService();

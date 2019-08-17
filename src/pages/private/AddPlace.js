@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import places from '../../services/places-services.js'
+import FileUploadComponent from '../../components/FileUpload.js';
+
 
 const momentOptions = [
   { value: 'January', label: 'January'},
@@ -37,6 +39,7 @@ class AddPlace extends Component {
     description: '',
     inOutDoors: 'indoors',
     money: 'free',
+    images: [],
     categories: [],
     error: '',
     message: ''
@@ -45,10 +48,9 @@ class AddPlace extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    // console.log(req.session.currentUser)
     places.createPlace(this.state)
     .then( (place) => {
-      console.log(place)
+      // console.log(place)
     })
     .catch( error => console.log(error) )
   }
@@ -61,7 +63,6 @@ class AddPlace extends Component {
   }
 
   handleMultipleMomentsSelect = (selectedOptions) => {  
-    console.log(selectedOptions);
     const bestMomentOfYear = selectedOptions.map((option) => option.value )
     this.setState({ bestMomentOfYear });
   }
@@ -70,6 +71,15 @@ class AddPlace extends Component {
     const categories = selectedOptions.map((option)=> option.value)
     this.setState({ categories });
   }
+
+  getImage = (url) => {
+    const { images } = this.state
+    images.push(url)
+    this.setState({
+      images,
+    })
+  }
+
   
   render() {
     const { 
@@ -78,9 +88,7 @@ class AddPlace extends Component {
       locationType, 
       description, 
       inOutDoors,
-      money,
-      error,
-      message
+      money
     } = this.state;
 
     
@@ -113,6 +121,7 @@ class AddPlace extends Component {
           <option value="free">Free</option>
           <option value="paid">Paid</option>
         </select>
+        <FileUploadComponent getImage={this.getImage}/>
         <Select
           defaultValue={[]}
           isMulti

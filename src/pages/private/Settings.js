@@ -18,7 +18,7 @@ function Settings(props) {
             <p>View your personal info</p>
           </div>
           <div className='wrapper-img arrow'>
-            <img src='./images/arrow.png' alt='arrow button'/>
+            <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
           </div>
         </Link>
         <Link to='/settings/my-places' className='oposite'>
@@ -27,7 +27,7 @@ function Settings(props) {
             <p>Places you liked</p>
           </div>
           <div className='wrapper-img arrow'>
-            <img src='./images/arrow.png' alt='arrow button'/>
+            <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
           </div>         
         </Link>
         <Link to='/settings/my-opinions' className='oposite'>
@@ -36,7 +36,7 @@ function Settings(props) {
             <p>Opinions you gave</p>
           </div>
           <div className='wrapper-img arrow'>
-            <img src='./images/arrow.png' alt='arrow button'/>
+            <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
           </div>    
         </Link>
         <button className='logout icon-shadow' onClick={props.logout}>Logout</button>
