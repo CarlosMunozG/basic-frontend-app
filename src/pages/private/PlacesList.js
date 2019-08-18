@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
+import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js';
 import AddButton from '../../components/AddButton.js';
 import ViewMapButton from '../../components/ViewMapButton.js';
@@ -59,4 +60,4 @@ class PlacesList extends Component {
   }
 }
 
-export default PlacesList;
+export default withAuth(PlacesList);

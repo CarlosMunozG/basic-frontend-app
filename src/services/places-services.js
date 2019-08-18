@@ -35,9 +35,8 @@ class PlacesService {
       .then(({ data }) => data);
   }
 
-  deletePlace(place) {
-    const { _id } = place;
-    return this.places.delete(`/places/${_id}/delete`)
+  deletePlace(id) {
+    return this.places.delete(`/places/${id}/delete`)
       .then(data => data)
   }
 }

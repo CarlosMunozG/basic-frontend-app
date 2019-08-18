@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js';
 import GoBackButton from '../../components/GoBackButton.js';
 import ViewMapButton from '../../components/ViewMapButton.js';
+import userService from '../../services/users-services.js';
 
 
 class Place extends Component {
   state = {
-    currentUserId: '',
     place: null,
+    redirect: false,
+    isLiked: false,
   }
 
   componentDidMount(){
@@ -18,10 +20,8 @@ class Place extends Component {
     places.getOnePlace(id)
     .then((response) => {
       const newPlace = response.data.onePlace;
-      const newCurrentUserId = this.props.user._id;
       this.setState({
         place: newPlace,
-        currentUserId: newCurrentUserId,
       })
     })
     .catch((error) =>{
@@ -29,12 +29,38 @@ class Place extends Component {
     })
   }
 
+  handleDeletePlaceClick = (id) => {
+    places.deletePlace(id)
+    .then(() => {
+      this.setState({
+        redirect: true,
+      })
+    })
+  }
+ 
+  handleLikeClick = (placeId) => {
+    //const userId = this.props.user._id;
+    userService.addLike(placeId)
+    .then(() => {
+      this.setState({
+        isLiked: true,
+      })
+    })
+  }
 
+  handleUnlikeClick = (placeId) => {
+    //const userId = this.props.user._id;
+    userService.deleteLike(placeId)
+    .then(() => {
+      this.setState({
+        isLiked: false,
+      })
+    })
+  }
 
 
   render() {
-    console.log(this.props.user._id);
-    const { place, currentUserId } = this.state;
+    const { place, redirect, isLiked } = this.state;
     return (
         <section className='model'>
           { place ? (
@@ -48,8 +74,22 @@ class Place extends Component {
                 <h1>{place.name}</h1>
                 <ViewMapButton addRoute='/places'/>
                 {this.props.user._id === place.owner ? (
-                  <Link to={`/places/${place._id}/edit`}>edit</Link>
+                  <>
+                    <Link to={`/places/${place._id}/edit`}>edit</Link>
+                    <button onClick={() => {
+                      this.handleDeletePlaceClick(place._id)
+                    }}>Delete</button>
+                  </>
                 ): null }
+                {!isLiked ? (
+                  <button onClick={() => {
+                    this.handleLikeClick(place._id)
+                  }}>like</button>
+                ) : (
+                  <button onClick={() => {
+                    this.handleUnlikeClick(place._id)
+                  }}>like</button>
+                ) }
                 </section>
                 <section>
                   <h3>{place.name}</h3>
@@ -78,8 +118,8 @@ class Place extends Component {
               </section>
             </>
           ): <p>Loading...</p> }
+        {redirect ? <Redirect to='/places-list'/> : null}
         </section>
-  
       
     )
   }

@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import MapGL, { GeolocateControl } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+import withAuth from '../../components/withAuth.js';
+
 const TOKEN='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
 
 const geolocateStyle = {
@@ -44,4 +46,4 @@ const Map = () => {
   )
 }
 
-export default Map
+export default withAuth(Map);

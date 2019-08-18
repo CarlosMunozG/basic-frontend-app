@@ -28,7 +28,7 @@ class FileUploadComponent extends Component {
       .then(url => {
         this.props.getImage(url);
         console.log(url);
-        this.setState({ avatarURL: url });
+        //this.setState({ avatarURL: url });
       });
   };
  

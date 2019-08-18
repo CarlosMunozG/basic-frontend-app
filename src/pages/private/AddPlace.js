@@ -1,34 +1,12 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
+
+import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js'
 import FileUploadComponent from '../../components/FileUpload.js';
+import {momentOptions} from '../../helpers/placeHelper.js';
+import {categoryOptions} from '../../helpers/placeHelper.js';
 
-
-const momentOptions = [
-  { value: 'January', label: 'January'},
-  { value: 'February', label: 'February' },
-  { value: 'March', label: 'March' },
-  { value: 'April', label: 'April' },
-  { value: 'May', label: 'May' },
-  { value: 'June', label: 'June' },
-  { value: 'July', label: 'July' },
-  { value: 'August', label: 'August' },
-  { value: 'September', label: 'September' },
-  { value: 'October', label: 'October' },
-  { value: 'November', label: 'November' },
-  { value: 'December', label: 'December' },
-];
-
-const categoryOptions = [
-  { value: 'Sports', label: 'Sports'},
-  { value: 'Leisure', label: 'Leisure' },
-  { value: 'Sleep', label: 'Sleep' },
-  { value: 'Eating', label: 'Eating' },
-  { value: 'Health', label: 'Health' },
-  { value: 'Summer', label: 'Summer' },
-  { value: 'Winter', label: 'Winter' },
-  { value: 'Water', label: 'Water' },
-]
 
 class AddPlace extends Component {
   state = {
@@ -137,4 +115,4 @@ class AddPlace extends Component {
   }
 }
 
-export default AddPlace;
+export default withAuth(AddPlace);

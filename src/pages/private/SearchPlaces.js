@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import MapGL from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
 
+import withAuth from '../../components/withAuth.js';
+
 const token='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
 
 class SearchableMap extends Component {
@@ -62,4 +64,4 @@ class SearchableMap extends Component {
     }
 }
 
-export default SearchableMap;
+export default withAuth(SearchableMap);
