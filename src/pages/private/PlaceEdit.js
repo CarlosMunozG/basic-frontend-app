@@ -5,8 +5,7 @@ import Select from 'react-select';
 import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js';
 import FileUploadComponent from '../../components/FileUpload.js';
-import {momentOptions} from '../../helpers/placeHelper.js';
-import {categoryOptions} from '../../helpers/placeHelper.js';
+import {momentOptions, categoryOptions} from '../../helpers/placeHelper.js';
 import GoBackButton from '../../components/GoBackButton.js';
 
 
@@ -93,6 +92,30 @@ class ProfileEdit extends Component {
     })
   }
 
+  getInputs = (inputs, isMonth) => {
+    let indexs = [];
+    isMonth ? 
+      momentOptions.forEach((input, i)=>{
+      if(inputs.includes(input.value)){
+        indexs.push(i)
+      } 
+    }) : 
+      categoryOptions.forEach((input, i)=>{
+      if(inputs.includes(input.value)){
+        indexs.push(i)
+      } 
+    })
+    return indexs;
+  }
+
+  renderInputs = (inputs, isMonth) => {
+    let inputNumbers = this.getInputs(inputs, isMonth);
+    return isMonth ? 
+    momentOptions.filter((moment, index) => inputNumbers.includes(index) && moment) 
+    : 
+    categoryOptions.filter((moment, index) => inputNumbers.includes(index) && moment)
+  }
+
 
   render() {
     const { name,
@@ -117,14 +140,6 @@ class ProfileEdit extends Component {
           <form onSubmit={this.handleFormSubmit} className='edit'>
             <label htmlFor='name'>Name of the place</label>
             <input id='name' type='text' name='name' value={name} onChange={this.handleChange} />
-            <label htmlFor='categories'>Categories</label>
-            <Select
-              defaultValue={[]}
-              isMulti
-              name='categories'
-              options={categoryOptions}
-              onChange={this.handleMultipleCategoriesSelect}
-            />
             <label htmlFor='postalCode'>Postal Code</label>
             <input id='postalCode' type='number' name='postalCode' value={postalCode} onChange={this.handleChange} />
             <label htmlFor='locationType'>Urban - Rural</label>
@@ -142,21 +157,10 @@ class ProfileEdit extends Component {
                 )}
             </select>
             <label htmlFor='bestMomentOfYear'>When to go</label>
-            {bestMomentOfYear.length > 0 ? (            
-              <>
-                {/* {console.log("moments", bestMomentOfYear.length)} */}
-                <Select
-                  defaultValue={[momentOptions[0], momentOptions[4]]}
-                  isMulti
-                  name='bestMomentOfYear'
-                  options={momentOptions}
-                  onChange={this.handleMultipleMomentsSelect}
-                />
-              </>
-            ) : (
+            {bestMomentOfYear.length > 0 && (            
               <>
                 <Select
-                  defaultValue={[momentOptions[11]]}
+                  defaultValue={this.renderInputs(bestMomentOfYear, true) }
                   isMulti
                   name='bestMomentOfYear'
                   options={momentOptions}
@@ -164,6 +168,19 @@ class ProfileEdit extends Component {
                 />
               </>
             )}
+            <label htmlFor='categories'>Categories</label>
+            {categories.length > 0 && (            
+              <>
+                <Select
+                  defaultValue={this.renderInputs(categories, false)}
+                  isMulti
+                  name='categories'
+                  options={categoryOptions}
+                  onChange={this.handleMultipleMomentsSelect}
+                />
+              </>
+            )}
+
             <label htmlFor='description'>Description</label>
             <input id='description' type='text' name='description' value={description} onChange={this.handleChange} />
             <label htmlFor='inOutDoors'>Indoors - Outdoors</label>

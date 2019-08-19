@@ -13,6 +13,7 @@ class Place extends Component {
     place: null,
     redirect: false,
     isLiked: false,
+    owner: null,
   }
 
   componentDidMount(){
@@ -20,8 +21,10 @@ class Place extends Component {
     places.getOnePlace(id)
     .then((response) => {
       const newPlace = response.data.onePlace;
+      const newOwner = response.data.ownerData;
       this.setState({
         place: newPlace,
+        owner: newOwner,
       })
     })
     .catch((error) =>{
@@ -60,7 +63,7 @@ class Place extends Component {
 
 
   render() {
-    const { place, redirect, isLiked } = this.state;
+    const { place, redirect, isLiked, owner } = this.state;
     return (
         <section className='model'>
           { place ? (
@@ -108,7 +111,7 @@ class Place extends Component {
                 </section>
                 <section>
                   <h3>Contact info</h3>
-                  <Link to={`/places/owner/${place.owner}`}>Owner: {place.owner}</Link>
+                  <Link to={`/places/owner/${owner._id}`}>Owner: {owner.username}</Link>
                 </section>
                 <section>
                   <h3>Description</h3>

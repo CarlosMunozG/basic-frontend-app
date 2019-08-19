@@ -14,12 +14,17 @@ class UserService {
   }
   
   getUser(id){
-    return this.user.get('/users/:id')
+    return this.user.get(`/users/${id}`)
     .then(response => response);
   }
 
-  updateUser(user) {
+  updateUser(user){
     return this.user.put(`/users/update`, { user })
+      .then(({ data }) => data);
+  }
+
+  addFriend(id){
+    return this.user.put(`/users/addFriend/${id}`)
       .then(({ data }) => data);
   }
   
