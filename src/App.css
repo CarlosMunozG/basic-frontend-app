@@ -79,6 +79,8 @@ section header{
 section section{
   height: auto;
   margin-bottom:140px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 a{
@@ -90,7 +92,7 @@ img{
   height: 100%;
 }
 
-.wrapper-img{
+.wrapper-center{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -146,18 +148,13 @@ img{
   }
 }
 
-
-
-
-
-
 /* ---- components ---- */
 
 .button {
   width: 100%;
-  background-color: blue;
-  color: #fff;
-  border: 1px solid #fff
+  position: relative;
+  height: 15vh;
+  border-radius: 20px;
 }
 
 .button-alt {
@@ -235,8 +232,121 @@ img{
   height: 25px;
 }
 
-/* ---- section ---- */
+/* ---- forms ---- */
 
+form label{
+  font-size: 12px;
+  color: var(--main-color);
+  font-weight: 300;
+  margin-left: 20px;
+}
+
+form input, form button, .like-form-button, form select{
+  width: 100%;
+  height: auto;
+  padding: 25px;
+  border-radius: 20px;
+  border: 1px solid var(--second-color);
+  font-size:16px;
+  font-weight: 300;
+  margin: 10px auto;
+}
+
+form div.css-yk16xz-control{
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  border: 1px solid var(--second-color);
+  font-size:16px;
+  font-weight: 300;
+  margin: 10px auto;
+}
+
+
+form button, .like-form-button{
+  background-color: var(--second-color);
+  color: var(--third-color);
+  font-weight: 400;
+}
+
+form select{
+  background-color: var(--third-color);
+}
+
+
+
+a.form-link{
+  display: block;
+  color: var(--main-color);
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+  margin:5px auto;
+}
+
+a.form-link span{
+  color: var(--second-color);
+  font-weight: 400;
+}
+
+.like-form-button{
+  text-align:center;
+}
+
+.add-form-img article{
+  position: relative;
+}
+
+.wrapper-form-images{
+  margin: 20px auto 0 auto;
+  width:20vh;
+  height:20vh;
+}
+
+.wrapper-form-img{
+  margin: 0 auto 0 auto;
+  width:20vh;
+  height:20vh;
+  border-radius:20px;
+  overflow: hidden;
+}
+
+.delete{
+  position: absolute;
+  top: -12px;
+  width:25px;
+  height: 25px;
+  right: -10px;
+}
+
+.pop-up{
+  position:fixed;
+  top:0;
+  left:0;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(241, 241, 241, 0.8);
+  z-index:2;
+}
+
+.pop-up figure{
+  padding: 50px 25px;
+  background-color: var(--third-color);
+  border-radius:20px;
+  margin-top:-100px;
+}
+
+.pop-up figure p:nth-child(1){
+  text-align: center;
+  font-weight: 300;
+  margin-bottom:30px;
+}
+
+form div.css-1hwfws3{
+  padding: 15px 25px;
+}
+
+/* ---- section ---- */
 
 section.testimonials .button {
   margin-bottom: 10px;
@@ -280,18 +390,20 @@ nav a div{
   margin-top:-5px;
 }
 
-
-.map-view{
-  width:300px;
-  height:50vh;
-}
-
 .view-list-button{
   position: absolute;
   top:70px;
   left: 20px;
 }
 
+/* ---- sections login & signup ---- */
+
+section.not-private div{
+  width:80%;
+  margin-top:-50px;
+}
+
+/* ---- section private main ---- */
 
 section.main header p{
   text-align: center;
@@ -301,17 +413,12 @@ section.main header p{
 
 section.main section{
   width:80%;
-  margin: 0 auto;
 }
 
 .button-main{
   display: block;
-  position: relative;
-  width: 100%;
-  height: 15vh;
   margin:20px auto;
-  border-radius: 20px;
-  background-color: #EAA01C;
+  background-color: var(--second-color);
 }
 
 .button-main p{
@@ -328,6 +435,7 @@ section.main section{
   height: 100%;
 }
 
+/* ---- section settings ---- */
 
 section.settings section a{
   width:80%;
@@ -341,14 +449,32 @@ section.settings section a div p{
   padding: 0 0 20px 0;
 }
 
+/* ---- section editing-pages ---- */
+
+section.edit-page section{
+  width:80%;
+  height: auto;
+}
+
+.edit input, .edit select{
+  margin-top: 0px;
+}
+
+.css-2b097c-container{
+  margin-top:-10px;
+}
+
+.edit:nth-child(2){
+  margin-top:100px;
+}
+
+/* ---- section settings/my-places ---- */
 
 section.my-places section{
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
   width:97.5%;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 section.my-places section a{
@@ -366,24 +492,24 @@ section.my-places section a h4{
   margin:10px 0 10px 10px;
 }
 
+/* ---- section places list ---- */
+
 section.places section{
   width:90%;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+.map-view{
+  width:300px;
+  height:50vh;
 }
 
 .button-list{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-  width: 100%;
-  height: 15vh;
   margin:10px auto 30px auto;
-  border-radius: 20px;
   background-color: var(--light-grey-color);
 }
-
 
 .button-list p{
   color: var(--second-color);

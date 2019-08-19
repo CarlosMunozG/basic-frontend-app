@@ -35,21 +35,21 @@ class Private extends Component {
         </header>
         <section>
           {images.length > 0 ? null: (
-            <Link to='settings/profile/edit'className='button-main normal-shadow'>
-              <div className='wrapper-img'>
+            <Link to='settings/profile/edit'className='button button-main normal-shadow'>
+              <div className='wrapper-center'>
                 {/* <img src='' alt=''/> */}
               </div>
               <p>Complete Profile</p>
             </Link>
           )}
-          <Link to='/search-places' className='button-main normal-shadow'>
-            <div className='wrapper-img'>
+          <Link to='/search-places' className='button button-main normal-shadow'>
+            <div className='wrapper-center'>
               {/* <img src='' alt=''/> */}
             </div>
             <p>Find places</p>
           </Link>
-          <Link to='' className='button-main normal-shadow'>
-            <div className='wrapper-img'>
+          <Link to='' className='button button-main normal-shadow'>
+            <div className='wrapper-center'>
               {/* <img src='' alt=''/> */}
             </div>
             <p>Find events</p>

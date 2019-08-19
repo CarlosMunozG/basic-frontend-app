@@ -29,19 +29,16 @@ class Login extends Component {
   render() {
     const { username, password } = this.state;
     return (
-      <>
-        <form onSubmit={this.handleFormSubmit}>
-          <label htmlFor='username' >Username:</label>
-          <input id='username' type='text' name='username' value={username} onChange={this.handleChange}/>
-          <label htmlFor='password'>Password:</label>
-          <input id='password' type='password' name='password' value={password} onChange={this.handleChange} />
-          <input type='submit' value='Login' />
-        </form>
-
-        <p>You don't have an accout yet?
-            <Link to={'/signup'}> Signup</Link>
-        </p>
-      </>
+      <section className='not-private wrapper-center'>
+        <div>
+          <form onSubmit={this.handleFormSubmit}>
+            <input id='username' type='text' name='username' value={username} onChange={this.handleChange} placeholder='Username'/>
+            <input id='password' type='password' name='password' value={password} onChange={this.handleChange} placeholder='Password'/>
+            <button type='submit'>Login</button>
+          </form>
+          <Link className='form-link' to={'/signup'}>You don't have an accout yet? <span>Signup</span></Link>
+        </div>
+      </section>
     )
   }
 }

@@ -40,8 +40,8 @@ class PlacesList extends Component {
           {Places.length > 0 ? (
             Places.map((place) => {
               return(
-                <Link to={`places/${place._id}`} key={place._id} className='button-list normal-shadow'>
-                  <div className='wrapper-img'>
+                <Link to={`places/${place._id}`} key={place._id} className='button button-list normal-shadow'>
+                  <div className='wrapper-center'>
                     <img src={place.images[0]} alt={place.name}/>
                   </div>
                   <div>

@@ -41,22 +41,17 @@ class Signup extends Component {
   render() {
     const { username, password, error, message } = this.state;
     return (
-      <>
-        <form onSubmit={this.handleFormSubmit}>
-          <label htmlFor='username'>Username:</label>
-          <input id='username' type='text' name='username' value={username} onChange={this.handleChange}/>
-          <label htmlFor='password'>Password:</label>
-          <input id='password' type='password' name='password' value={password} onChange={this.handleChange} />
-          <input type='submit' value='Signup' />
-        </form>
-
-        {message ? <p>{error}</p> : null }
-
-        <p>Already have account? 
-          <Link to={'/login'}> Login</Link>
-        </p>
-
-      </>
+      <section className='not-private wrapper-center'>
+        <div>
+          <form onSubmit={this.handleFormSubmit}>
+            <input id='username' type='text' name='username' value={username} onChange={this.handleChange} placeholder='Username'/>
+            <input id='password' type='password' name='password' value={password} onChange={this.handleChange} placeholder='Password'/>
+            <button type='submit'>Sign up</button>
+          </form>
+          {message ? <p>{error}</p> : null }
+          <Link className='form-link' to={'/login'}>Already have account? <span>Login</span></Link>
+        </div>
+      </section>
     )
   }
 }

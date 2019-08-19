@@ -8,20 +8,23 @@ import userService from '../../services/users-services.js';
 class Profile extends Component {
   state = {
     username: '',
-    password: '',
     images: [],
     location: '',
+    favouritePlaces: [],
+    friends: []
   }
 
   componentDidMount(){
-    userService.getCurrentUser()
+    const {id} = this.props.match.params;
+    userService.getUser(id)
     .then((response) => {
       const user = response.data.newUser;
       this.setState({
         username: user.username,
-        password: user.password,
         images: user.images,
         location: user.location,
+        favouritePlaces: user.favouritePlaces,
+        friends: user.friends,
       })
     })
     .catch((error) =>{
@@ -33,7 +36,7 @@ class Profile extends Component {
     const { username, password, images, location } = this.state;
      return (
       <div>
-        <h1>Profile</h1>
+        <h1>Owner</h1>
         <GoBackButton />
         <section>
           <p>{username}</p>

@@ -12,6 +12,11 @@ class UserService {
     return this.user.get('/users')
     .then(response => response);
   }
+  
+  getUser(id){
+    return this.user.get('/users/:id')
+    .then(response => response);
+  }
 
   updateUser(user) {
     return this.user.put(`/users/update`, { user })

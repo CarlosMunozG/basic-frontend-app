@@ -36,7 +36,7 @@ class FileUploadComponent extends Component {
     const {isUploading, progress, avatarURL} = this.state;
     return (
       <div>
-        <label>Avatar:</label>
+        <label>Images</label>
         {isUploading && <p>Progress: {progress}</p>}
         {avatarURL && <img src={avatarURL} alt='name'/>}
         <FileUploader

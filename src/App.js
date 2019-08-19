@@ -24,6 +24,7 @@ import PlacesList from './pages/private/PlacesList.js';
 import AddPlace from './pages/private/AddPlace.js';
 import PlaceEdit from './pages/private/PlaceEdit.js';
 import SearchPlaces from './pages/private/SearchPlaces.js';
+import Owner from './pages/private/Owner.js';
 
 import './App.css';
 
@@ -61,6 +62,7 @@ class App extends Component {
               <PrivateRoute path="/places/:id" exact component={Place} />
               <PrivateRoute path="/places/:id/edit" exact component={PlaceEdit} />
               <PrivateRoute path="/settings" exact component={Settings} />
+              <PrivateRoute path="/places/owner/:id" exact component={Owner} />
               <Route component={NotFound} />
             </Switch>
           </div>

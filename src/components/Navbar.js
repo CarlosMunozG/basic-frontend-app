@@ -11,22 +11,22 @@ class Navbar extends Component {
         {this.props.isLoggedIn ? ( 
           <nav className={classNavbar}>
             <Link to='/main'>
-              <div className='wrapper-img icon-shadow'>
+              <div className='wrapper-center icon-shadow'>
                 <img src={process.env.PUBLIC_URL + '/images/dogjoy-home-icon.png'} alt='home icon'/>
               </div>
             </Link>
             <Link to='/search'>
-              <div className='wrapper-img icon-shadow'>
+              <div className='wrapper-center icon-shadow'>
                 <img src={process.env.PUBLIC_URL + '/images/dogjoy-search-icon.png'} alt='search icon'/>
               </div>
             </Link>
             <Link to='/favourites'>
-              <div className='wrapper-img icon-shadow'>
+              <div className='wrapper-center icon-shadow'>
                <img src={process.env.PUBLIC_URL + '/images/dogjoy-favourites-icon.png'} alt='favourites icon'/>
               </div>
             </Link>
             <Link to='/settings'>
-              <div className='wrapper-img icon-shadow'>
+              <div className='wrapper-center icon-shadow'>
                 <img src={process.env.PUBLIC_URL + '/images/dogjoy-profile-icon.png'} alt='profile icon'/>
               </div>
             </Link>

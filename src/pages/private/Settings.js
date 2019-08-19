@@ -17,7 +17,7 @@ function Settings(props) {
             <h3>Profile</h3>
             <p>View your personal info</p>
           </div>
-          <div className='wrapper-img arrow'>
+          <div className='wrapper-center arrow'>
             <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
           </div>
         </Link>
@@ -26,7 +26,7 @@ function Settings(props) {
             <h3>My Places</h3>
             <p>Places you liked</p>
           </div>
-          <div className='wrapper-img arrow'>
+          <div className='wrapper-center arrow'>
             <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
           </div>         
         </Link>
@@ -35,7 +35,7 @@ function Settings(props) {
             <h3>My opinions</h3>
             <p>Opinions you gave</p>
           </div>
-          <div className='wrapper-img arrow'>
+          <div className='wrapper-center arrow'>
             <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
           </div>    
         </Link>

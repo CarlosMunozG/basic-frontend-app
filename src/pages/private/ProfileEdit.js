@@ -5,6 +5,7 @@ import withAuth from '../../components/withAuth.js';
 import userService from '../../services/users-services.js';
 import user from '../../services/users-services.js';
 import FileUploadComponent from '../../components/FileUpload.js';
+import GoBackButton from '../../components/GoBackButton.js';
 
 class ProfileEdit extends Component {
   state = {
@@ -100,52 +101,56 @@ class ProfileEdit extends Component {
   render() {
     const { username, password, location, email, redirect, images, popUp } = this.state;
     return (
-      <>
-      <form onSubmit={this.handleFormSubmit}>
-        <label htmlFor='username'>Name:</label>
-        <input id='username' type='text' name='username' value={username} onChange={this.handleChange}/>
-
-        <label htmlFor='email'>Email:</label>
-        <input id='email' type='email' name='email' value={email} onChange={this.handleChange} />
-
-        <div>
-          {images.length > 0 ? (
-            <>
-              <div className='wrapper-img'>
-                <img src={images[0]} alt={username} />
-              </div>
-              <p onClick={() => this.handleDeleteImage(0)}>Delete</p>
-              <FileUploadComponent getImage={this.getImage} />
-            </>
-          ) : (
-            <FileUploadComponent getImage={this.getImage} />
-          )}
-        </div>
-
-        <label htmlFor='location'>Location:</label>
-        <input id='location' type='text' name='location' value={location} onChange={this.handleChange} />
-
-        <button type='submit'>Edit Profile</button>
-      </form>
-
-
-
-
-      <form onSubmit={this.handleFormPasswordSubmit}>
-        <label htmlFor='password'>Password:</label>
-        <input id='password' type='password' name='password' value={password} onChange={this.handleChange} />
-
-        <p onClick={this.showPopUp}>Edit password</p>
-        {popUp ? (
-          <section>
-            <p>Confirm you want to change your password?</p>
-            <p onClick={this.closePopUp}>No</p>
-            <button type='submit'>Confirm</button>
-          </section>
-        ) : null}
-      </form>
+      <section className='edit-page'>
+        <header>
+          <GoBackButton />
+          <h1>Editing Profile</h1>
+        </header>
+        <section>
+          <form onSubmit={this.handleFormSubmit} className='edit'>
+            <label htmlFor='username'>Name</label>
+            <input id='username' type='text' name='username' value={username} onChange={this.handleChange}/>
+            <label htmlFor='email'>Email</label>
+            <input id='email' type='email' name='email' value={email} onChange={this.handleChange} />
+            
+            <div className='add-form-img'>
+              {images.length > 0 ? (
+                <article className='wrapper-form-images'>
+                  <div className='wrapper-center wrapper-form-img'>
+                    <img src={images[0]} alt={username} />
+                  </div>
+                  <div onClick={() => this.handleDeleteImage(0)} className='wrapper-center delete'>
+                    <img src={process.env.PUBLIC_URL + '/images/delete-icon.png'} alt='delete icon'/>
+                  </div>                 
+                </article>
+              ) : (
+                <FileUploadComponent getImage={this.getImage} />
+              )}
+              {images.length > 0 ? <FileUploadComponent getImage={this.getImage} /> : null}
+            </div>
+                      
+           
+            <label htmlFor='location'>Location</label>
+            <input id='location' type='text' name='location' value={location} onChange={this.handleChange} />
+            <button type='submit'>Edit Profile</button>
+          </form>
+          <form onSubmit={this.handleFormPasswordSubmit} className='edit'>
+            <label htmlFor='password'>Password</label>
+            <input id='password' type='password' name='password' value={password} onChange={this.handleChange} />
+            <p className='like-form-button' onClick={this.showPopUp}>Edit password</p>
+            {popUp ? (
+              <section className='pop-up wrapper-center'>
+                <figure className='normal-shadow'>
+                  <p>Confirm you want to change your password?</p>
+                  <p className='like-form-button' onClick={this.closePopUp}>No</p>
+                  <button type='submit'>Confirm</button>
+                </figure>
+              </section>
+            ) : null}
+          </form>
+        </section>
         {redirect ? <Redirect to='/settings/profile'/> : null}
-      </>
+      </section>
     )
   }
 }

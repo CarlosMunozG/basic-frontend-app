@@ -67,7 +67,7 @@ class Place extends Component {
             <>
               <section>
                 <section>
-                  <div className='wrapper-img'>
+                  <div className='wrapper-center'>
                     <img src={place.images[0]} alt={place.name}/>
                   </div>
                 <GoBackButton />
@@ -108,7 +108,7 @@ class Place extends Component {
                 </section>
                 <section>
                   <h3>Contact info</h3>
-                  <p>Owner: {place.owner}</p>
+                  <Link to={`/places/owner/${place.owner}`}>Owner: {place.owner}</Link>
                 </section>
                 <section>
                   <h3>Description</h3>
