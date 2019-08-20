@@ -2,7 +2,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import MapGL from "react-map-gl";
+import MapGL, { Marker } from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
 
 import withAuth from '../../components/withAuth.js';
@@ -16,7 +16,10 @@ class SearchableMap extends Component {
       longitude: 2.165588,
       zoom: 6
     },
-    searchResultLayer: null
+    searchResultLayer: null,
+    marker: false,
+    markerLon: 0,
+    markerLat: 0,
   }
 
   mapRef = React.createRef()
@@ -26,9 +29,23 @@ class SearchableMap extends Component {
       viewport: { ...this.state.viewport, ...viewport }
     })
   }
+
+  _onClickMap = (event) => {
+    console.log(event.lngLat);
+    const newLat = event.lngLat[0];
+    const newLon = event.lngLat[1];
+    this.setState({
+      marker: true,
+      markerLat: newLat,
+      markerLon: newLon,
+    })
+  }
+
   // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
   handleGeocoderViewportChange = viewport => {
     const geocoderDefaultOverrides = { transitionDuration: 1000 };
+
+  
 
     return this.handleViewportChange({
       ...viewport,
@@ -37,10 +54,12 @@ class SearchableMap extends Component {
   };
 
     render(){
-      const { viewport } = this.state
+
+      const { viewport, marker, markerLon, markerLat } = this.state
       return (
         <div style={{ height: '100vh'}}>
           {/* <h1 style={{textAlign: 'center', fontSize: '25px', fontWeight: 'bolder' }}>Use the search bar to find a location or click <a href="/">here</a> to find your location</h1> */}
+          
           <MapGL 
             ref={this.mapRef}
             {...viewport}
@@ -49,14 +68,23 @@ class SearchableMap extends Component {
             height="100vh"
             onViewportChange={this.handleViewportChange}
             mapboxApiAccessToken={token}
+            onClick={this._onClickMap}
           >
             <Geocoder 
               mapRef={this.mapRef}
               onResult={this.handleOnResult}
               onViewportChange={this.handleGeocoderViewportChange}
               mapboxApiAccessToken={token}
-              position='top-left'
+              position='top-right'
             />
+            { marker ? (
+              <>
+              <Marker latitude={markerLat} longitude={markerLon}>
+                <div className="signal"></div>
+              </Marker>
+              {console.log('aqui')}
+              </>
+            ) : null }
             <Link to='Places-list' className='view-list-button'>View list</Link>
           </MapGL>
         </div>

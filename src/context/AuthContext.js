@@ -8,6 +8,7 @@ class AuthProvider extends Component {
     isLoggedIn: false,
     user: {},
     isLoading: true,
+    position: [],
   }
 
   userSignUp = (user) => {
@@ -58,8 +59,21 @@ class AuthProvider extends Component {
     })
   }
 
+  geolocateUser = () =>  {
+    this.setState({loading: true},()=>{
+      navigator.geolocation.getCurrentPosition((position) => {
+        let location= [position.coords.latitude, position.coords.longitude];
+       this.setState({
+         position: location,
+         loading: false,
+       })
+     })
+    })
+  
+  }
+
   render() {
-    const {user, isLoggedIn, isLoading} = this.state
+    const {user, isLoggedIn, isLoading, position } = this.state
     return (
       <>
         {isLoading ? <p>Loading...</p> : (
@@ -67,6 +81,8 @@ class AuthProvider extends Component {
             {
               user,
               isLoggedIn,
+              position,
+              getLocation: this.geolocateUser,
               login: this.userLogin,
               signup: this.userSignUp,
               logout: this.userLogout,

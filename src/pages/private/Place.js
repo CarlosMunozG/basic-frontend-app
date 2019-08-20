@@ -14,6 +14,7 @@ class Place extends Component {
     redirect: false,
     isLiked: false,
     owner: null,
+    popUp: false,
   }
 
   componentDidMount(){
@@ -37,6 +38,7 @@ class Place extends Component {
     .then(() => {
       this.setState({
         redirect: true,
+        popUp: false,
       })
     })
   }
@@ -61,69 +63,97 @@ class Place extends Component {
     })
   }
 
+  showPopUp = () => {
+    this.setState({
+      popUp: true,
+    })
+  }
+  
+  closePopUp = () => {
+    this.setState({
+      popUp: false,
+    })
+  }
+
+
 
   render() {
-    const { place, redirect, isLiked, owner } = this.state;
+    const { place, redirect, isLiked, owner, popUp } = this.state;
     return (
-        <section className='model'>
-          { place ? (
+        <>
+        <section className='model-page'>
+          {place ? (
             <>
-              <section>
-                <section>
-                  <div className='wrapper-center'>
-                    <img src={place.images[0]} alt={place.name}/>
-                  </div>
+              <header>
                 <GoBackButton />
-                <h1>{place.name}</h1>
-                <ViewMapButton addRoute='/places'/>
-                {this.props.user._id === place.owner ? (
-                  <>
-                    <Link to={`/places/${place._id}/edit`}>edit</Link>
-                    <button onClick={() => {
-                      this.handleDeletePlaceClick(place._id)
-                    }}>Delete</button>
-                  </>
-                ): null }
                 {!isLiked ? (
-                  <button onClick={() => {
+                  <button className='wrapper-center like' onClick={() => {
                     this.handleLikeClick(place._id)
-                  }}>like</button>
+                  }}>
+                    <img src={process.env.PUBLIC_URL + '/images/unlike-icon.png'} alt='unlike icon'/>
+                  </button>
                 ) : (
-                  <button onClick={() => {
+                  <button className='wrapper-center like' onClick={() => {
                     this.handleUnlikeClick(place._id)
-                  }}>like</button>
+                  }}>
+                    <img src={process.env.PUBLIC_URL + '/images/like-icon.png'} alt='like icon'/>
+                  </button>
                 ) }
-                </section>
-                <section>
-                  <h3>{place.name}</h3>
-                  <p>Valoracion global {place.likes}</p>
-                </section>
-                <section>
-                  <h3>Info</h3>
-                  <p>indoors/outdoors: {place.inOutDoors}</p>
-                  <p>{place.locationType}</p>
-                  <p>categories: {place.categories}</p>
-                  <p>free or paid: {place.money}</p>
-                </section>
-                <section>
-                  <h3>Location</h3>
-                  <p>Postal Code: {place.postalCode}</p>
-                </section>
-                <section>
-                  <h3>Contact info</h3>
-                  <Link to={`/places/owner/${owner._id}`}>Owner: {owner.username}</Link>
-                </section>
-                <section>
-                  <h3>Description</h3>
-                  <p>open: {place.bestMomentOfYear}</p>
-                  <p>{place.description}</p>
-                </section>
+              </header>
+              <section>
+                <div className='wrapper-center model-img-wrapper'>
+                  <img src={place.images[0]} alt={place.name}/>
+                </div>
+                <div className='info-model top-shadow'>
+                  <h1>{place.name}</h1>
+                  <ViewMapButton addRoute='/places'/>
+                  {this.props.user._id === place.owner ? (
+                    <>
+                      <Link to={`/places/${place._id}/edit`} className='wrapper-center icon-shadow edit-icon'>
+                        <img src={process.env.PUBLIC_URL + '/images/edit-icon.png'} alt='edit icon'/>
+                      </Link>
+                      <div className='wrapper-center icon-shadow delete-icon' onClick={this.showPopUp}>
+                        <img src={process.env.PUBLIC_URL + '/images/delete-icon.png'} alt='delete icon'/>
+                      </div>
+                    </>
+                  ): null }             
+                    <p>Global puntuation {place.likes}</p>
+                </div>
+                  <div>
+                    <h3>Info</h3>
+                    <p>indoors/outdoors: {place.inOutDoors}</p>
+                    <p>{place.locationType}</p>
+                    <p>categories: {place.categories}</p>
+                    <p>free or paid: {place.money}</p>
+                  </div>
+                  <div>
+                    <h3>Location</h3>
+                    <p>Postal Code: {place.postalCode}</p>
+                  </div>
+                  <div>
+                    <h3>Contact info</h3>
+                    <Link to={`/places/owner/${owner._id}`}>Owner: {owner.username}</Link>
+                  </div>
+                  <div>
+                    <h3>Description</h3>
+                    <p>open: {place.bestMomentOfYear}</p>
+                    <p>{place.description}</p>
+                  </div>
               </section>
             </>
           ): <p>Loading...</p> }
-        {redirect ? <Redirect to='/places-list'/> : null}
         </section>
-      
+        {popUp ? (
+          <section className='pop-up wrapper-center'>
+            <figure className='normal-shadow'>
+              <p>Confirm you want to delete this place?</p>
+              <p className='like-form-button' onClick={this.closePopUp}>No</p>
+              <button className='button-pop-up' onClick={() => {this.handleDeletePlaceClick(place._id)}}>Confirm</button>
+            </figure>
+          </section>
+        ) : null}
+        {redirect ? <Redirect to='/places-list'/> : null}
+      </>
     )
   }
 }

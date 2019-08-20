@@ -1,49 +1,118 @@
-import React,{ useState } from 'react';
+import React,{ Component } from 'react';
 import {Link} from 'react-router-dom';
-import MapGL, { GeolocateControl } from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import "mapbox-gl/dist/mapbox-gl.css";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import MapGL, { GeolocateControl, Marker } from "react-map-gl";
+import Geocoder from "react-map-gl-geocoder";
 
 import withAuth from '../../components/withAuth.js';
+import places from '../../services/places-services.js';
 
-const TOKEN='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
+const token='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
+const geolocateStyle = { float:'right', margin:'10px', padding:'10px' };
 
-const geolocateStyle = {
-  float: 'left',
-  margin: '50px',
-  padding: '10px'
-};
 
-const Map = () => {
+class Places extends Component {
+  state = {
+    viewport :{
+      latitude: 0,
+      longitude: 0,
+      zoom: 12,
+    },
+    searchResultLayer: null,
+    location: [],
+    places: [],
+  }
 
-  const [viewport, setViewPort ] = useState({
-    width: "100%",
-    height: '100vh',
-    latitude: 41.393544,
-    longitude: 2.165588,
-    zoom: 6
-  })
-
-  const _onViewportChange = viewport => setViewPort({...viewport, transitionDuration: 2000 })
   
-  return (
-    <div style={{ margin: '0 auto'}}>
-      <h3 style={{textAlign: 'center', fontSize: '25px', fontWeight: 'bolder' }}>GeoLocator: Click To Find  
-      Your Location or click <a href="/search">here</a> to search for a location</h3>
+  geolocateStyle = { float:'right', margin:'50px', padding:'10px' };
+
+  componentDidMount() {
+    this.props.getLocation();
+    places.getAllPlaces()
+    .then((response) => {
+      const getAllPlaces = response.data.listOfPlaces;
+      this.setState({
+        places: getAllPlaces,
+      })
+    }).catch(error => console.log(error));
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    this.props.position[0] !== prevProps.position[0] && this.setState({
+      viewport: {
+        latitude: this.props.position[0],
+        longitude: this.props.position[1],
+        zoom: 12
+      }
+    },()=>{})
+  }
+
+  mapRef = React.createRef()
+
+  handleViewportChange = viewport => {
+    this.setState({
+      viewport: { ...this.state.viewport, ...viewport }
+    })
+  }
+
+  handleGeocoderViewportChange = viewport => {
+    const geocoderDefaultOverrides = { transitionDuration: 1000 };
+    return this.handleViewportChange({
+      ...viewport,
+      ...geocoderDefaultOverrides
+    });
+  };
+
+  render() {
+    const { viewport, places } = this.state;
+    console.log(places);
+    return (
+      <div className='mapbox-in-page'>
       <Link to='/places/add'>Create a new place</Link>
       <MapGL
+        ref={this.mapRef}
         {...viewport}
-        mapboxApiAccessToken={TOKEN}
         mapStyle="mapbox://styles/mapbox/light-v8"
-        onViewportChange={_onViewportChange}
+        width="100%"
+        height="100vh"
+        onViewportChange={this.handleViewportChange}
+        mapboxApiAccessToken={token}
+        onClick={this._onClickMap}
       >
+      <Geocoder 
+        mapRef={this.mapRef}
+        onResult={this.handleOnResult}
+        onViewportChange={this.handleGeocoderViewportChange}
+        mapboxApiAccessToken={token}
+        position='top-left'
+      />
         <GeolocateControl
           style={geolocateStyle}
           positionOptions={{enableHighAccuracy: true}}
           trackUserLocation={true}
         />
+        {places.length > 0 && (
+          places.map((place) => {
+            return (
+              <Marker latitude={place.location.coordinates[0]} longitude={place.location.coordinates[1]}>
+                <div className="signal"></div>
+              </Marker>
+            )
+          })
+        )}
       </MapGL>
     </div>
-  )
+    )
+  }
 }
 
-export default withAuth(Map);
+export default withAuth(Places);
+
+
+
+
+  
+  
+
+  

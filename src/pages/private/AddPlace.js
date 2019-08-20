@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
+import "mapbox-gl/dist/mapbox-gl.css";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import MapGL, { Marker, GeolocateControl } from "react-map-gl";
+import Geocoder from "react-map-gl-geocoder";
+
 
 import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js'
 import FileUploadComponent from '../../components/FileUpload.js';
-import {momentOptions} from '../../helpers/placeHelper.js';
-import {categoryOptions} from '../../helpers/placeHelper.js';
+import { momentOptions, categoryOptions } from '../../helpers/placeHelper.js';
 import GoBackButton from '../../components/GoBackButton.js';
+
+const token='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
+const geolocateStyle = { float:'right', margin:'10px', padding:'10px' };
 
 
 class AddPlace extends Component {
@@ -21,8 +28,29 @@ class AddPlace extends Component {
     images: [],
     categories: [],
     error: '',
-    message: ''
+    message: '',
+    marker: false,
+    viewport :{
+      latitude: 0,
+      longitude: 0,
+      zoom: 12,
+    },
+    searchResultLayer: null,
   };
+  
+  componentDidMount() {
+    this.props.getLocation()
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    this.props.position[0] !== prevProps.position[0] && this.setState({
+      viewport: {
+        latitude: this.props.position[0],
+        longitude: this.props.position[1],
+        zoom: 12
+      }
+    },()=>{console.log(this.state.viewport)})
+  }
 
 
   handleFormSubmit = (event) => {
@@ -68,6 +96,41 @@ class AddPlace extends Component {
   }
 
 
+
+
+  mapRef = React.createRef()
+
+  handleViewportChange = viewport => {
+    this.setState({
+      viewport: { ...this.state.viewport, ...viewport }
+    })
+  }
+
+  _onClickMap = (event) => {
+    console.log(event.lngLat);
+    const newLat = event.lngLat[0];
+    const newLon = event.lngLat[1];
+    const coordinates = [newLat, newLon];
+    this.setState({
+      markerLat: newLat,
+      markerLon: newLon,
+      location:{coordinates},
+      marker: true,
+    })
+
+  }
+
+  handleGeocoderViewportChange = viewport => {
+    const geocoderDefaultOverrides = { transitionDuration: 1000 };
+    return this.handleViewportChange({
+      ...viewport,
+      ...geocoderDefaultOverrides,
+    });
+  };
+
+
+
+
   
   render() {
     const { 
@@ -77,9 +140,11 @@ class AddPlace extends Component {
       description, 
       inOutDoors,
       money,
-      images
+      images,
+      marker,
+      viewport,
+      location,
     } = this.state;
-
     
     return (
       <section className='edit-page'>
@@ -141,6 +206,39 @@ class AddPlace extends Component {
               )}) : ( <FileUploadComponent getImage={this.getImage} />)}
               {images.length > 0 ? <FileUploadComponent getImage={this.getImage} /> : null}
             </div>
+
+            <label htmlFor='location'>Location</label>
+            <div className='mapbox-in-form'>
+              <MapGL 
+                ref={this.mapRef}
+                {...viewport}
+                mapStyle="mapbox://styles/mapbox/light-v8"
+                width="100%"
+                height="50vh"
+                onViewportChange={this.handleViewportChange}
+                mapboxApiAccessToken={token}
+                onClick={this._onClickMap}
+              >
+                <Geocoder 
+                  mapRef={this.mapRef}
+                  onResult={this.handleOnResult}
+                  onViewportChange={this.handleGeocoderViewportChange}
+                  mapboxApiAccessToken={token}
+                  position='top-left'
+                />
+                <GeolocateControl
+                  style={geolocateStyle}
+                  positionOptions={{enableHighAccuracy: true}}
+                  trackUserLocation={true}
+                />
+                {marker && (
+                  <Marker latitude={location.coordinates[0]} longitude={location.coordinates[1]}>
+                    <div className="signal"></div>
+                  </Marker>
+                )}
+              </MapGL>
+            </div>
+
             <button type='submit'>Add new place</button>
           </form>
         </section>

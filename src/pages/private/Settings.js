@@ -39,7 +39,7 @@ function Settings(props) {
             <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
           </div>    
         </Link>
-        <button className='logout icon-shadow' onClick={props.logout}>Logout</button>
+        <button className='button-mini logout icon-shadow' onClick={props.logout}>Logout</button>
       </section>
     </section>
   )

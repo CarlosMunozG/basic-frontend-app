@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Select from 'react-select';
+import "mapbox-gl/dist/mapbox-gl.css";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import MapGL, { Marker, GeolocateControl } from "react-map-gl";
+import Geocoder from "react-map-gl-geocoder";
 
 import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js';
 import FileUploadComponent from '../../components/FileUpload.js';
 import {momentOptions, categoryOptions} from '../../helpers/placeHelper.js';
 import GoBackButton from '../../components/GoBackButton.js';
+
+const token='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
+const geolocateStyle = { float:'right', margin:'10px', padding:'10px' };
 
 
 class ProfileEdit extends Component {
@@ -22,6 +29,14 @@ class ProfileEdit extends Component {
     images: [],
     _id:'',
     redirect: false,
+    viewport :{
+      latitude: 0,
+      longitude: 0,
+      zoom: 8,
+    },
+    searchResultLayer: null,
+    location: [],
+    render: false,
   }
 
   componentDidMount() {
@@ -37,7 +52,8 @@ class ProfileEdit extends Component {
           inOutDoors,
           money,
           categories,
-          images
+          images,
+          location,
         } = response.data.onePlace;
         this.setState({
           name,
@@ -49,7 +65,15 @@ class ProfileEdit extends Component {
           money,
           categories,
           images,
-          _id: this.props.match.params.id
+          _id: this.props.match.params.id,
+          viewport :{
+            latitude: 0,
+            longitude: 0,
+            zoom: 13
+          },
+          searchResultLayer: null,
+          location,
+          render: true,
         })
       })
       .catch((error) => {
@@ -116,8 +140,39 @@ class ProfileEdit extends Component {
     categoryOptions.filter((moment, index) => inputNumbers.includes(index) && moment)
   }
 
+  mapRef = React.createRef()
+
+  handleViewportChange = viewport => {
+    this.setState({
+      viewport: { ...this.state.viewport, ...viewport }
+    })
+  }
+
+  _onClickMap = (event) => {
+    console.log(event.lngLat);
+    const newLat = event.lngLat[0];
+    const newLon = event.lngLat[1];
+    const coordinates = [newLat, newLon];
+    this.setState({
+      markerLat: newLat,
+      markerLon: newLon,
+      location:{coordinates}
+    })
+
+  }
+
+  handleGeocoderViewportChange = viewport => {
+    const geocoderDefaultOverrides = { transitionDuration: 1000 };
+    return this.handleViewportChange({
+      ...viewport,
+      ...geocoderDefaultOverrides
+    });
+  };
+
+
 
   render() {
+    console.log('inicioooooo',this.state);
     const { name,
       postalCode,
       locationType,
@@ -129,8 +184,14 @@ class ProfileEdit extends Component {
       images,
       _id,
       redirect,
+      viewport,
+      location,
+      render,
     } = this.state;
     return (
+      <>
+      {render && (
+
       <section className='edit-page'>
         <header>
           <GoBackButton />
@@ -227,11 +288,50 @@ class ProfileEdit extends Component {
               {images.length > 0 ? <FileUploadComponent getImage={this.getImage} /> : null}
             </div>
 
+
+
+            <label htmlFor='location'>Location</label>
+            <div className='mapbox-in-form'>
+              <MapGL 
+                ref={this.mapRef}
+                {...viewport}
+                mapStyle="mapbox://styles/mapbox/light-v8"
+                width="100%"
+                height="50vh"
+                onViewportChange={this.handleViewportChange}
+                mapboxApiAccessToken={token}
+                onClick={this._onClickMap}
+              >
+                <GeolocateControl
+                  style={geolocateStyle}
+                  positionOptions={{enableHighAccuracy: true}}
+                  trackUserLocation={true}
+                />
+                <Geocoder 
+                  mapRef={this.mapRef}
+                  onResult={this.handleOnResult}
+                  onViewportChange={this.handleGeocoderViewportChange}
+                  mapboxApiAccessToken={token}
+                  position='top-right'
+                />
+                
+                <Marker latitude={location.coordinates[1]} longitude={location.coordinates[0]}>
+                  <div className="signal"></div>
+                </Marker>
+              </MapGL>
+            </div>
+
+
+
+
+
             <button type='submit'>Edit place</button>
           </form>
           {redirect ? <Redirect to={`/places/${_id}`}/> : null}
         </section>
       </section>
+      )}
+      </>
     )
   }
 }

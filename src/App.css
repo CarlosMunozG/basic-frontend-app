@@ -117,6 +117,13 @@ img{
   box-shadow: 0px -1px 34px -13px rgba(0,0,0,0.75)
 }
 
+.top-shadow{
+  -webkit-box-shadow: 0px -12px 20px -20px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px -12px 20px -20px rgba(0,0,0,0.75);
+  box-shadow: 0px -12px 20px -20px rgba(0,0,0,0.75)
+}
+
+
 
 /* ---- layout ---- */
 
@@ -162,7 +169,7 @@ img{
   background-color: #fff;
 }
 
-.go-back-button{
+.go-back-button, .like{
   position: absolute;
 }
 
@@ -172,11 +179,18 @@ img{
   margin:35px 0 0 18px;
 }
 
-.go-back-button img{
+.like{
+  width: 50px;
+  height: 50px;
+  margin:40px 0 0 0;
+  right: 10%;
+}
+
+.go-back-button img, .like img{
   height:25px;
 }
 
-.logout{
+.button-mini{
   background-color: var(--second-color);
   padding: 10px 20px;
   margin:40px auto;
@@ -184,9 +198,12 @@ img{
   font-size: 16px;
   border-radius: 20px;
   text-align: center;
-  width:100px;
   display:block;
   border:none;
+}
+
+.logout{
+  width:100px;
 }
 
 .arrow{
@@ -232,6 +249,15 @@ img{
   height: 25px;
 }
 
+.edit-icon{
+  width: 36px;
+  height: 36px;
+  border-radius:18px;
+  position: absolute;
+  top: -18px;
+  right: 11%;
+}
+
 /* ---- forms ---- */
 
 form label{
@@ -241,7 +267,7 @@ form label{
   margin-left: 20px;
 }
 
-form input, form button, .like-form-button, form select{
+form input, form button, .like-form-button, form select, .button-pop-up{
   width: 100%;
   height: auto;
   padding: 25px;
@@ -263,7 +289,7 @@ form div.css-yk16xz-control{
 }
 
 
-form button, .like-form-button{
+form button, .like-form-button, .button-pop-up{
   background-color: var(--second-color);
   color: var(--third-color);
   font-weight: 400;
@@ -317,6 +343,22 @@ a.form-link span{
   width:25px;
   height: 25px;
   right: -10px;
+}
+
+.delete-icon{
+  position: absolute;
+  top: -18px;
+  width: 36px;
+  height:36px;
+  right: 23%;
+  border-radius:18px;
+  border: none;
+}
+
+.delete-icon img{
+  width: 36px;
+  height: 36px;
+  margin-top: -2px;
 }
 
 .pop-up{
@@ -449,6 +491,49 @@ section.settings section a div p{
   padding: 0 0 20px 0;
 }
 
+/* ---- section models ------*/
+
+section.model-page header{
+  position: absolute;
+}
+
+section.model-page div.model-img-wrapper, section.model-page div.model-img{
+  height: 40vh;
+  overflow: hidden;
+}
+
+section.model-page .profile-img img{
+  width: 100%;
+  height: auto;
+}
+
+.info-model{
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-top:-20px;
+  background-color: var(--third-color);
+  z-index:2;
+  position: absolute;
+  width:100%;
+}
+
+section.model-page p, section.model-page h4{
+  text-align:center;
+}
+
+section.model-page h4{
+  margin-top: 40px;
+}
+
+section.model-page p{
+  color: var(--second-color);
+}
+
+.edit-button{
+  width:160px;
+}
+
+
 /* ---- section editing-pages ---- */
 
 section.edit-page section{
@@ -537,3 +622,47 @@ section.places section{
   font-weight: 400;
 }
 
+.signal{
+  width: 10px;
+  height:10px;
+  background-color: #EAA01C;
+}
+
+
+/*---------- mapbox ----------*/
+
+.mapbox-in-form{
+  height:50vh;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.mapbox-in-page{
+  height:100vh;
+}
+
+.mapboxgl-ctrl-geocoder {
+  font-size: 16px;
+  line-height: 22px;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  background-color: #fff;
+  width: 82.5%;
+  min-width: 200px;
+  border-radius: 10px;
+}
+
+.mapboxgl-ctrl-group{
+  border-radius:10px;
+  height:50px;
+  border:none;
+} 
+
+.mapboxgl-ctrl-group:not(:empty){
+  box-shadow: 0 0 10px 2px rgba(0,0,0,.1);
+}
+
+.mapboxgl-ctrl-group > button{
+  margin:0;
+}

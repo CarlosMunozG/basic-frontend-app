@@ -24,14 +24,14 @@ class PlacesService {
   }
 
   createPlace(place) {
-    const { name, postalCode, bestMomentOfYear, categories, locationType, description, inOutDoors, money, images } = place;
-    return this.places.post('/places/add', {name, postalCode, bestMomentOfYear, categories, locationType, description, inOutDoors, money, images})
+    const { name, postalCode, bestMomentOfYear, categories, locationType, description, inOutDoors, money, images, location } = place;
+    return this.places.post('/places/add', {name, postalCode, bestMomentOfYear, categories, locationType, description, inOutDoors, money, images, location})
       .then(({ data }) => data);
   }
 
   updatePlace(place) {
-    const { name, postalCode, bestMomentOfYear, categories, locationType, description, inOutDoors, money, images, _id } = place;
-    return this.places.put(`/places/${_id}/update`, {name, postalCode, bestMomentOfYear, categories, locationType, description, inOutDoors, money, images})
+    const { name, postalCode, bestMomentOfYear, categories, locationType, description, inOutDoors, money, images, _id, location } = place;
+    return this.places.put(`/places/${_id}/update`, {name, postalCode, bestMomentOfYear, categories, locationType, description, inOutDoors, money, images, location})
       .then(({ data }) => data);
   }
 

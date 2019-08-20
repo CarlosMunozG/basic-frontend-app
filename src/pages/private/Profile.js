@@ -30,24 +30,29 @@ class Profile extends Component {
   }
 
   render(){
-    const { username, password, images, location } = this.state;
+    const { username, images, location } = this.state;
      return (
-      <div>
-        <h1>Profile</h1>
-        <GoBackButton />
+      <section className='model-page'>
+        <header>
+          <GoBackButton />
+        </header>
         <section>
-          <p>{username}</p>
-          <p>{password}</p>
-          <p>{images}</p>
-          <p>{location}</p>
-          <p>{username}</p>
-          <p>{username}</p>
-          <p>{username}</p>
-          <p>{username}</p>
-          <p>{username}</p>
-          <Link to={`/settings/profile/edit`}>Edit Profile</Link>
+          <div className='wrapper-center model-img profile-img'>
+            {images.length > 0 ? (
+              <img src={images[0]} alt={username}/>
+              ) : (
+              <img src={process.env.PUBLIC_URL + '/images/default-profile-picture.png'} alt='default profile'/>
+            )}
+          </div>
+          <div className='info-model top-shadow'>
+            <h1>{username}</h1>
+            <p>Username</p>
+            <h4>{location}</h4>
+            <p>Location</p>
+            <Link className='button-mini edit-button icon-shadow' to={`/settings/profile/edit`}>Edit Profile</Link>
+          </div>
         </section>
-      </div>
+      </section>
     )
   }
 }

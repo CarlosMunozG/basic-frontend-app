@@ -42,7 +42,7 @@ class Private extends Component {
               <p>Complete Profile</p>
             </Link>
           )}
-          <Link to='/search-places' className='button button-main normal-shadow'>
+          <Link to='/places' className='button button-main normal-shadow'>
             <div className='wrapper-center'>
               {/* <img src='' alt=''/> */}
             </div>
