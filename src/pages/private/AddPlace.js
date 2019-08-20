@@ -232,7 +232,7 @@ class AddPlace extends Component {
                   trackUserLocation={true}
                 />
                 {marker && (
-                  <Marker latitude={location.coordinates[0]} longitude={location.coordinates[1]}>
+                  <Marker latitude={location.coordinates[1]} longitude={location.coordinates[0]}>
                     <div className="signal"></div>
                   </Marker>
                 )}

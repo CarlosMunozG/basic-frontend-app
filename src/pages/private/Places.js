@@ -41,8 +41,8 @@ class Places extends Component {
   componentDidUpdate(prevProps, prevState){
     this.props.position[0] !== prevProps.position[0] && this.setState({
       viewport: {
-        latitude: this.props.position[0],
-        longitude: this.props.position[1],
+        latitude: this.props.position[1],
+        longitude: this.props.position[0],
         zoom: 12
       }
     },()=>{})
@@ -95,7 +95,7 @@ class Places extends Component {
         {places.length > 0 && (
           places.map((place) => {
             return (
-              <Marker latitude={place.location.coordinates[0]} longitude={place.location.coordinates[1]}>
+              <Marker latitude={place.location.coordinates[1]} longitude={place.location.coordinates[0]}>
                 <div className="signal"></div>
               </Marker>
             )
