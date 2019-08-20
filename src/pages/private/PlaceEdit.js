@@ -67,9 +67,9 @@ class ProfileEdit extends Component {
           images,
           _id: this.props.match.params.id,
           viewport :{
-            latitude: 0,
-            longitude: 0,
-            zoom: 13
+            latitude: location.coordinates[1],
+            longitude: location.coordinates[0],
+            zoom: 15
           },
           searchResultLayer: null,
           location,
@@ -148,8 +148,7 @@ class ProfileEdit extends Component {
     })
   }
 
-  _onClickMap = (event) => {
-    console.log(event.lngLat);
+  _getCoordinates = (event) => {
     const newLat = event.lngLat[0];
     const newLon = event.lngLat[1];
     const coordinates = [newLat, newLon];
@@ -158,7 +157,6 @@ class ProfileEdit extends Component {
       markerLon: newLon,
       location:{coordinates}
     })
-
   }
 
   handleGeocoderViewportChange = viewport => {
@@ -172,7 +170,6 @@ class ProfileEdit extends Component {
 
 
   render() {
-    console.log('inicioooooo',this.state);
     const { name,
       postalCode,
       locationType,
@@ -300,22 +297,26 @@ class ProfileEdit extends Component {
                 height="50vh"
                 onViewportChange={this.handleViewportChange}
                 mapboxApiAccessToken={token}
-                onClick={this._onClickMap}
+                onClick={this._getCoordinates}
               >
-                <GeolocateControl
-                  style={geolocateStyle}
-                  positionOptions={{enableHighAccuracy: true}}
-                  trackUserLocation={true}
-                />
                 <Geocoder 
                   mapRef={this.mapRef}
                   onResult={this.handleOnResult}
                   onViewportChange={this.handleGeocoderViewportChange}
                   mapboxApiAccessToken={token}
-                  position='top-right'
+                  position='top-left'
                 />
-                
-                <Marker latitude={location.coordinates[1]} longitude={location.coordinates[0]}>
+                <GeolocateControl
+                  style={geolocateStyle}
+                  positionOptions={{enableHighAccuracy: true}}
+                  trackUserLocation={true}
+                />
+                <Marker 
+                  latitude={location.coordinates[1]} 
+                  longitude={location.coordinates[0]}
+                  draggable={true}
+                  onDrag={this._getCoordinates}
+                >
                   <div className="signal"></div>
                 </Marker>
               </MapGL>
