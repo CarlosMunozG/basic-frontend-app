@@ -19,7 +19,7 @@ class OpinionsService {
   // }
 
   getOpinion(id){
-    return this.opinions.get(`opinions/${id}`)
+    return this.opinions.get(`/opinions/${id}`)
     .then(response => response);
   }
 
@@ -35,10 +35,11 @@ class OpinionsService {
       .then(({ data }) => data);
   }
 
-  // deletePlace(id) {
-  //   return this.opinions.delete(`/opinions/${id}/delete`)
-  //     .then(data => data)
-  // }
+  deleteOpinion(id) {
+    console.log(id);
+    return this.opinions.delete(`/opinions/${id}/delete`)
+      .then(data => data)
+  }
 
   // addLike(placeId) {
   //   return this.opinions.put(`/opinions/${placeId}/like`)

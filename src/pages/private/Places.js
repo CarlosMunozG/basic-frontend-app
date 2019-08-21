@@ -9,6 +9,7 @@ import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js';
 import userService from '../../services/users-services.js';
 import AddButton from '../../components/AddButton.js';
+import MapPointer from '../../components/MapPointer.js';
 
 const token='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
 const geolocateStyle = { float:'right', margin:'10px', padding:'10px' };
@@ -122,7 +123,18 @@ class Places extends Component {
           places.map((place) => {
             return (
               <>
-              <Marker key={place._id}
+              <MapPointer 
+                key={place._id}
+                latitude={place.location.coordinates[1]} 
+                longitude={place.location.coordinates[0]}
+                placeId={place._id}
+                placeName={place.name}
+                placeImages={place.images}
+                placeLikes={place.likes}
+                placeCategories={place.categories}
+                {...this.props}
+              />
+              {/* <Marker key={place._id}
                 latitude={place.location.coordinates[1]} 
                 longitude={place.location.coordinates[0]}
               >
@@ -139,12 +151,12 @@ class Places extends Component {
                     <img src={process.env.PUBLIC_URL + '/images/marker-eating.png'} alt='health marker'/>
                   </div>
                 )}
-              </Marker>
-              {selectedPoint && (
+              </Marker> */}
+              {/* {selectedPoint && (
                 <Popup
                   latitude={place.location.coordinates[1]}
                   longitude={place.location.coordinates[0]}
-                  onClick={<p>holaaa</p>}
+                  onClick={false}
                   onClose={()=>{
                     this.setState({
                       selectedPoint: false,
@@ -173,7 +185,7 @@ class Places extends Component {
                     </div>
                   </Link>
                 </Popup>
-              )}
+              )} */}
               </>
             )
           })

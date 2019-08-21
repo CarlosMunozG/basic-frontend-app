@@ -4,16 +4,16 @@ import { Redirect } from 'react-router-dom';
 import withAuth from '../../components/withAuth.js';
 import GoBackButton from '../../components/GoBackButton.js';
 import opinionsService from '../../services/opinions-services.js';
-import places from '../../services/places-services.js';
 
 class Opinion extends Component {
   state = {
     description:'',
     rating: 0,
     placeName: '',
-    redirect: false,
     opinionId: '',
     placeId: '',
+    popUp: false,
+    redirect: false,
   }
 
   componentDidMount(){
@@ -23,7 +23,6 @@ class Opinion extends Component {
     .then((response) => {
       const { description, rating } = response.data.oneOpinion;
       const newPlaceName = response.data.oneOpinion.place.name;
-      console.log(response.data);
       this.setState({
         description,
         rating,
@@ -36,7 +35,6 @@ class Opinion extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
     opinionsService.updateOpinion(this.state)
     .then( () => {
       this.setState({
@@ -46,6 +44,17 @@ class Opinion extends Component {
     .catch( error => console.log(error) )
   }
 
+  handleDeleteClick = (id) => {
+    opinionsService.deleteOpinion(id)
+    .then(() => {
+      this.setState({
+        redirect: true,
+        popUp: false,
+      })
+    })
+  }
+
+
   handleChange = (event) => {  
     const {name, value} = event.target;
     this.setState({
@@ -53,9 +62,23 @@ class Opinion extends Component {
     });
   }
 
+  showPopUp = () => {
+    this.setState({
+      popUp: true,
+    })
+  }
+  
+  closePopUp = () => {
+    this.setState({
+      popUp: false,
+    })
+  }
+
+
   render() {
-    const { description, rating, placeName, redirect, placeId } = this.state;
+    const { description, rating, placeName, redirect, opinionId, placeId, popUp } = this.state;
     return (
+      <>
       <section className='edit-page'>
         <header>
           <GoBackButton />
@@ -96,9 +119,21 @@ class Opinion extends Component {
 
             <button type='submit'>Edit my opinion</button>
           </form>
+          <p>or if you want, delete your opinion</p>
+          <button onClick={this.showPopUp}>Delete</button>
           {redirect && <Redirect to={`/places/${placeId}`}/>}
         </section>
       </section>
+      {popUp ? (
+        <section className='pop-up wrapper-center'>
+          <figure className='normal-shadow'>
+            <p>Confirm you want to delete this place?</p>
+            <p className='like-form-button' onClick={this.closePopUp}>No</p>
+            <button className='button-pop-up' onClick={() => {this.handleDeleteClick(opinionId)}}>Confirm</button>
+          </figure>
+        </section>
+      ) : null}
+      </>
     )
   }
 }
