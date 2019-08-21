@@ -39,6 +39,16 @@ class PlacesService {
     return this.places.delete(`/places/${id}/delete`)
       .then(data => data)
   }
+
+  addLike(placeId) {
+    return this.places.put(`/places/${placeId}/like`)
+      .then(({ data }) => data);
+  }
+
+  deleteLike(placeId) {
+    return this.places.put(`/places/${placeId}/unlike`)
+      .then(({ data }) => data);
+  }
 }
 
 const places = new PlacesService();

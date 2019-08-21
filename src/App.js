@@ -20,6 +20,8 @@ import MyPlaces from './pages/private/MyPlaces.js';
 import MyOpinions from './pages/private/MyOpinions.js';
 import Places from './pages/private/Places.js';
 import Place from './pages/private/Place.js';
+import Opinion from './pages/private/Opinion.js';
+import OpinionEdit from './pages/private/OpinionEdit.js';
 import PlacesList from './pages/private/PlacesList.js';
 import AddPlace from './pages/private/AddPlace.js';
 import PlaceEdit from './pages/private/PlaceEdit.js';
@@ -61,6 +63,8 @@ class App extends Component {
               <PrivateRoute path="/places/add" exact component={AddPlace} />
               <PrivateRoute path="/places/:id" exact component={Place} />
               <PrivateRoute path="/places/:id/edit" exact component={PlaceEdit} />
+              <PrivateRoute path="/places/:id/opinion" exact component={Opinion} />
+              <PrivateRoute path="/places/:id/opinion/:opinionId/update" exact component={OpinionEdit} />
               <PrivateRoute path="/settings" exact component={Settings} />
               <PrivateRoute path="/places/owner/:id" exact component={Owner} />
               <Route component={NotFound} />

@@ -5,7 +5,6 @@ import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js';
 import GoBackButton from '../../components/GoBackButton.js';
 import ViewMapButton from '../../components/ViewMapButton.js';
-import userService from '../../services/users-services.js';
 
 
 class Place extends Component {
@@ -14,15 +13,28 @@ class Place extends Component {
     redirect: false,
     isLiked: false,
     owner: null,
+    opinions: [],
     popUp: false,
+    likes: [],
+    favouritePlaces: []
   }
 
   componentDidMount(){
     const {id} = this.props.match.params;
+    const userId = this.props.user._id;
     places.getOnePlace(id)
     .then((response) => {
       const newPlace = response.data.onePlace;
       const newOwner = response.data.ownerData;
+      const newOpinions = response.data.onePlace.opinions;
+      if(newPlace.likes.includes(userId)){
+        this.setState({
+          place: newPlace,
+          owner: newOwner,
+          opinions: newOpinions,
+          isLiked: true,
+        })
+      }
       this.setState({
         place: newPlace,
         owner: newOwner,
@@ -33,29 +45,31 @@ class Place extends Component {
     })
   }
 
-  handleDeletePlaceClick = (id) => {
-    places.deletePlace(id)
+  handleDeletePlaceClick = (placeId) => {
+    const newFavPlaces = this.props.user.favouritePlaces.pop(placeId);
+    places.deletePlace(placeId)
     .then(() => {
       this.setState({
         redirect: true,
         popUp: false,
+        favouritePlaces: newFavPlaces,
       })
     })
   }
  
   handleLikeClick = (placeId) => {
-    //const userId = this.props.user._id;
-    userService.addLike(placeId)
+    const newFavPlaces = this.props.user.favouritePlaces.push(placeId);
+    places.addLike(placeId)
     .then(() => {
       this.setState({
         isLiked: true,
+        favouritePlaces: newFavPlaces,
       })
     })
   }
 
   handleUnlikeClick = (placeId) => {
-    //const userId = this.props.user._id;
-    userService.deleteLike(placeId)
+    places.deleteLike(placeId)
     .then(() => {
       this.setState({
         isLiked: false,
@@ -73,6 +87,14 @@ class Place extends Component {
     this.setState({
       popUp: false,
     })
+  }
+
+  checkUserOpinion = () => {
+    const { opinions }  = this.state;
+    const userId = this.props.user._id;
+    return opinions.includes(opinion => 
+      opinion.owner.toString() === userId
+    )
   }
 
 
@@ -138,6 +160,19 @@ class Place extends Component {
                     <h3>Description</h3>
                     <p>open: {place.bestMomentOfYear}</p>
                     <p>{place.description}</p>
+                  </div>
+                  <div>
+                    <h3>Opinions</h3>
+                    {this.checkUserOpinion() ? ( 
+                      <Link to={`/places/${place._id}/opinion`}>Give and opinion</Link>
+                     ) : 
+                     this.state.opinions.map(opinion => {
+                       if(opinion.owner === this.props.user._id){
+                         return(
+                           <Link to={`/places/${place._id}/opinion/${opinion._id}/update`}>Change your opinion</Link>
+                         )
+                       }
+                     })}
                   </div>
               </section>
             </>

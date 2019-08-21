@@ -221,6 +221,12 @@ img{
   align-items: center;
 }
 
+.title-detail{
+  text-align:center;
+  color: var(--second-color);
+  margin-top:10px;
+}
+
 .go-to-map-link{
   text-align: center;
   width: 90px;
@@ -436,6 +442,7 @@ nav a div{
   position: absolute;
   top:70px;
   left: 20px;
+  color: #333;
 }
 
 /* ---- sections login & signup ---- */
@@ -622,14 +629,16 @@ section.places section{
   font-weight: 400;
 }
 
-.signal{
-  width: 10px;
-  height:10px;
-  background-color: #EAA01C;
-}
 
 
 /*---------- mapbox ----------*/
+
+.signal{
+  width: 24px;
+  height:32px;
+  margin-top:-32px;
+  margin-left:-12px;
+}
 
 .mapbox-in-form{
   height:50vh;
@@ -665,4 +674,18 @@ section.places section{
 
 .mapboxgl-ctrl-group > button{
   margin:0;
+}
+
+.map-popup-img{
+  width:150px;
+  height:130px;
+}
+
+.mapboxgl-popup-anchor-bottom, .mapboxgl-popup-anchor-bottom-left, .mapboxgl-popup-anchor-bottom-right{
+  margin-top:-30px;
+}
+
+.overlays a.add{
+  top:70px;
+  right:25px;
 }

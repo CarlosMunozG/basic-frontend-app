@@ -2,11 +2,13 @@ import React,{ Component } from 'react';
 import {Link} from 'react-router-dom';
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import MapGL, { GeolocateControl, Marker } from "react-map-gl";
+import MapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
 
 import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js';
+import userService from '../../services/users-services.js';
+import AddButton from '../../components/AddButton.js';
 
 const token='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
 const geolocateStyle = { float:'right', margin:'10px', padding:'10px' };
@@ -15,23 +17,24 @@ const geolocateStyle = { float:'right', margin:'10px', padding:'10px' };
 class Places extends Component {
   state = {
     viewport :{
-      latitude: 0,
-      longitude: 0,
-      zoom: 12,
+      latitude: this.props.position[0],
+      longitude: this.props.position[1],
+      zoom: 14,
     },
     searchResultLayer: null,
     location: [],
     places: [],
+    selectedPoint: null,
+    setSelectedPoint: null,
+    isLiked: false,
   }
-
-  
-  geolocateStyle = { float:'right', margin:'50px', padding:'10px' };
 
   componentDidMount() {
     this.props.getLocation();
     places.getAllPlaces()
     .then((response) => {
       const getAllPlaces = response.data.listOfPlaces;
+      console.log(this.props)
       this.setState({
         places: getAllPlaces,
       })
@@ -41,8 +44,8 @@ class Places extends Component {
   componentDidUpdate(prevProps, prevState){
     this.props.position[0] !== prevProps.position[0] && this.setState({
       viewport: {
-        latitude: this.props.position[1],
-        longitude: this.props.position[0],
+        latitude: this.props.position[0],
+        longitude: this.props.position[1],
         zoom: 12
       }
     },()=>{})
@@ -64,12 +67,35 @@ class Places extends Component {
     });
   };
 
+  handleLikeClick = (placeId) => {
+    //const userId = this.props.user._id;
+    userService.addLike(placeId)
+    .then(() => {
+      this.setState({
+        isLiked: true,
+      })
+    })
+  }
+
+
+  handleUnlikeClick = (placeId) => {
+    //const userId = this.props.user._id;
+    userService.deleteLike(placeId)
+    .then(() => {
+      this.setState({
+        isLiked: false,
+      })
+    })
+  }
+
+
+
+
+
   render() {
-    const { viewport, places } = this.state;
-    console.log(places);
+    const { viewport, places, selectedPoint, isLiked } = this.state;
     return (
       <div className='mapbox-in-page'>
-      <Link to='/places/add'>Create a new place</Link>
       <MapGL
         ref={this.mapRef}
         {...viewport}
@@ -95,12 +121,65 @@ class Places extends Component {
         {places.length > 0 && (
           places.map((place) => {
             return (
-              <Marker latitude={place.location.coordinates[1]} longitude={place.location.coordinates[0]}>
-                <div className="signal"></div>
+              <>
+              <Marker key={place._id}
+                latitude={place.location.coordinates[1]} 
+                longitude={place.location.coordinates[0]}
+              >
+                {place.categories.includes('Eating') && (
+                  <div
+                    key={place._id}
+                    className="signal wrapper-center" 
+                    onClick={event => {
+                      event.preventDefault();
+                      this.setState({
+                        selectedPoint: true
+                      })
+                    }}>
+                    <img src={process.env.PUBLIC_URL + '/images/marker-eating.png'} alt='health marker'/>
+                  </div>
+                )}
               </Marker>
+              {selectedPoint && (
+                <Popup
+                  latitude={place.location.coordinates[1]}
+                  longitude={place.location.coordinates[0]}
+                  onClick={<p>holaaa</p>}
+                  onClose={()=>{
+                    this.setState({
+                      selectedPoint: false,
+                    })
+                  }}
+                >
+                  <Link to={`/places/${place._id}`} className='map-popup'>
+                    <div className='wrapper-center map-popup-img'>
+                      <img src={place.images[0]}alt=''/>
+                    </div>
+                    <div>
+                      <h4>{place.name}</h4>
+                      {!isLiked ? (
+                        <button className='wrapper-center like' onClick={() => {
+                          this.handleLikeClick(place._id)
+                        }}>
+                          <img src={process.env.PUBLIC_URL + '/images/unlike-icon.png'} alt='unlike icon'/>
+                        </button>
+                      ) : (
+                        <button className='wrapper-center like' onClick={() => {
+                          this.handleUnlikeClick(place._id)
+                        }}>
+                          <img src={process.env.PUBLIC_URL + '/images/like-icon.png'} alt='like icon'/>
+                        </button>
+                      ) }
+                    </div>
+                  </Link>
+                </Popup>
+              )}
+              </>
             )
           })
         )}
+        <AddButton addRoute='/places/add'/>
+        <Link to='Places-list' className='view-list-button'>View list</Link>
       </MapGL>
     </div>
     )

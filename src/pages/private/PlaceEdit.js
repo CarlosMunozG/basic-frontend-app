@@ -27,6 +27,7 @@ class ProfileEdit extends Component {
     money: '',
     categories: [],
     images: [],
+    likes: [],
     _id:'',
     redirect: false,
     viewport :{
@@ -54,6 +55,7 @@ class ProfileEdit extends Component {
           categories,
           images,
           location,
+          likes,
         } = response.data.onePlace;
         this.setState({
           name,
@@ -65,6 +67,7 @@ class ProfileEdit extends Component {
           money,
           categories,
           images,
+          likes,
           _id: this.props.match.params.id,
           viewport :{
             latitude: location.coordinates[1],
@@ -317,7 +320,9 @@ class ProfileEdit extends Component {
                   draggable={true}
                   onDrag={this._getCoordinates}
                 >
-                  <div className="signal"></div>
+                  <div className="signal wrapper-center">
+                    <img src={process.env.PUBLIC_URL + '/images/marker.png'} alt='marker icon'/>
+                  </div>
                 </Marker>
               </MapGL>
             </div>

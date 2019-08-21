@@ -31,9 +31,9 @@ class AddPlace extends Component {
     message: '',
     marker: false,
     viewport :{
-      latitude: 0,
-      longitude: 0,
-      zoom: 12,
+      latitude: this.props.position[0],
+      longitude: this.props.position[1],
+      zoom: 14,
     },
     searchResultLayer: null,
   };
@@ -47,9 +47,9 @@ class AddPlace extends Component {
       viewport: {
         latitude: this.props.position[0],
         longitude: this.props.position[1],
-        zoom: 12
+        zoom: 14
       }
-    },()=>{console.log(this.state.viewport)})
+    },()=>{})
   }
 
 
@@ -106,8 +106,7 @@ class AddPlace extends Component {
     })
   }
 
-  _onClickMap = (event) => {
-    console.log(event.lngLat);
+  _getCoordinates = (event) => {
     const newLat = event.lngLat[0];
     const newLon = event.lngLat[1];
     const coordinates = [newLat, newLon];
@@ -217,7 +216,7 @@ class AddPlace extends Component {
                 height="50vh"
                 onViewportChange={this.handleViewportChange}
                 mapboxApiAccessToken={token}
-                onClick={this._onClickMap}
+                onClick={this._getCoordinates}
               >
                 <Geocoder 
                   mapRef={this.mapRef}
@@ -232,8 +231,15 @@ class AddPlace extends Component {
                   trackUserLocation={true}
                 />
                 {marker && (
-                  <Marker latitude={location.coordinates[1]} longitude={location.coordinates[0]}>
-                    <div className="signal"></div>
+                  <Marker 
+                    latitude={location.coordinates[1]} 
+                    longitude={location.coordinates[0]}
+                    draggable={true}
+                    onDrag={this._getCoordinates}
+                  >
+                    <div className="signal wrapper-center">
+                      <img src={process.env.PUBLIC_URL + '/images/marker.png'} alt='marker icon'/>
+                    </div>
                   </Marker>
                 )}
               </MapGL>
