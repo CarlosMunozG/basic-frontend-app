@@ -76,7 +76,7 @@ class AuthProvider extends Component {
     const {user, isLoggedIn, isLoading, position } = this.state
     return (
       <>
-        {isLoading ? <p>Loading...</p> : (
+        {isLoading ? <div class="lds-ring"><div></div><div></div><div></div><div></div></div> : (
           <AuthContext.Provider value={
             {
               user,
