@@ -19,7 +19,7 @@ class MapPointer extends Component {
         latitude={latitude} 
         longitude={longitude}
       >
-        {placeCategories.includes('Eating') && (
+        {/* {placeCategories.includes('Eating') && ( */}
           <div
             key={key}
             className="signal wrapper-center" 
@@ -31,7 +31,7 @@ class MapPointer extends Component {
             }}>
             <img src={process.env.PUBLIC_URL + '/images/marker-eating.png'} alt='health marker'/>
           </div>
-        )}
+        {/* )} */}
       </Marker>
 
       {this.state.selectedPoint && (
