@@ -30,7 +30,7 @@ class Profile extends Component {
   }
 
   render(){
-    const { username, images, location } = this.props.user;
+    const { username, images, location } = this.state;
       return (
       <section className='model-page'>
         <header>
