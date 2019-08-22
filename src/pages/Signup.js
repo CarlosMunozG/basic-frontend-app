@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 import withAuth from '../components/withAuth.js';
+import GoBackButton from '../components/GoBackButton.js';
 
 
 class Signup extends Component {
@@ -41,6 +42,10 @@ class Signup extends Component {
   render() {
     const { username, password, error, message } = this.state;
     return (
+      <>
+      <div className='intro-pos'>
+        <GoBackButton className='intro-pos'/>
+      </div>
       <section className='not-private wrapper-center'>
         <div>
           <form onSubmit={this.handleFormSubmit}>
@@ -52,6 +57,7 @@ class Signup extends Component {
           <Link className='form-link' to={'/login'}>Already have account? <span>Login</span></Link>
         </div>
       </section>
+      </>
     )
   }
 }

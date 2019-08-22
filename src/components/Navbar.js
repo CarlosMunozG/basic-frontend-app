@@ -15,11 +15,6 @@ class Navbar extends Component {
                 <img src={process.env.PUBLIC_URL + '/images/dogjoy-home-icon.png'} alt='home icon'/>
               </div>
             </Link>
-            {/* <Link to='/search'>
-              <div className='wrapper-center icon-shadow'>
-                <img src={process.env.PUBLIC_URL + '/images/dogjoy-search-icon.png'} alt='search icon'/>
-              </div>
-            </Link> */}
             <Link to='/favourites'>
               <div className='wrapper-center icon-shadow'>
                <img src={process.env.PUBLIC_URL + '/images/dogjoy-favourites-icon.png'} alt='favourites icon'/>
@@ -32,13 +27,7 @@ class Navbar extends Component {
             </Link>
             
           </nav>
-        ) : (
-          <>
-            <Link to='/'>Home</Link>
-            <Link to='/login'>Login</Link>
-            <Link to='/signup'>Signup</Link>
-          </>
-        )}
+        ) : null }
       </div>
     )
   }
