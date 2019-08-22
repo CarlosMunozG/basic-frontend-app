@@ -7,14 +7,19 @@ class UserService {
       withCredentials: true,
     })
   }
-  
-  getCurrentUser(){
+    
+  getAllUsers(){
     return this.user.get('/users')
     .then(response => response);
   }
   
   getUser(id){
     return this.user.get(`/users/${id}`)
+    .then(response => response);
+  }
+
+  getAllMyFavourites(){
+    return this.user.get('/users/myFavourites')
     .then(response => response);
   }
 
@@ -28,15 +33,10 @@ class UserService {
       .then(({ data }) => data);
   }
   
-  // addLike(placeId) {
-  //   return this.user.put(`/users/like/${placeId}`)
-  //     .then(({ data }) => data);
-  // }
-
-  // deleteLike(placeId, userId) {
-  //   return this.user.put(`/users/unlike/${placeId}`)
-  //     .then(({ data }) => data);
-  // }
+  deleteFriend(id) {
+    return this.user.put(`/users/deleteFriend/${id}`)
+      .then(({ data }) => data);
+  }
 
 }
 

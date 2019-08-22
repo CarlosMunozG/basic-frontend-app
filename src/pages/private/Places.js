@@ -2,12 +2,11 @@ import React,{ Component } from 'react';
 import {Link} from 'react-router-dom';
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
-import MapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
+import MapGL, { GeolocateControl } from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
 
 import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js';
-import userService from '../../services/users-services.js';
 import AddButton from '../../components/AddButton.js';
 import MapPointer from '../../components/MapPointer.js';
 
@@ -25,9 +24,6 @@ class Places extends Component {
     searchResultLayer: null,
     location: [],
     places: [],
-    selectedPoint: null,
-    setSelectedPoint: null,
-    isLiked: false,
   }
 
   componentDidMount() {
@@ -67,33 +63,9 @@ class Places extends Component {
     });
   };
 
-  handleLikeClick = (placeId) => {
-    //const userId = this.props.user._id;
-    userService.addLike(placeId)
-    .then(() => {
-      this.setState({
-        isLiked: true,
-      })
-    })
-  }
-
-
-  handleUnlikeClick = (placeId) => {
-    //const userId = this.props.user._id;
-    userService.deleteLike(placeId)
-    .then(() => {
-      this.setState({
-        isLiked: false,
-      })
-    })
-  }
-
-
-
-
 
   render() {
-    const { viewport, places, selectedPoint, isLiked } = this.state;
+    const { viewport, places } = this.state;
     return (
       <div className='mapbox-in-page'>
       <MapGL
@@ -133,58 +105,6 @@ class Places extends Component {
                 placeCategories={place.categories}
                 {...this.props}
               />
-              {/* <Marker key={place._id}
-                latitude={place.location.coordinates[1]} 
-                longitude={place.location.coordinates[0]}
-              >
-                {place.categories.includes('Eating') && (
-                  <div
-                    key={place._id}
-                    className="signal wrapper-center" 
-                    onClick={event => {
-                      event.preventDefault();
-                      this.setState({
-                        selectedPoint: true
-                      })
-                    }}>
-                    <img src={process.env.PUBLIC_URL + '/images/marker-eating.png'} alt='health marker'/>
-                  </div>
-                )}
-              </Marker> */}
-              {/* {selectedPoint && (
-                <Popup
-                  latitude={place.location.coordinates[1]}
-                  longitude={place.location.coordinates[0]}
-                  onClick={false}
-                  onClose={()=>{
-                    this.setState({
-                      selectedPoint: false,
-                    })
-                  }}
-                >
-                  <Link to={`/places/${place._id}`} className='map-popup'>
-                    <div className='wrapper-center map-popup-img'>
-                      <img src={place.images[0]}alt=''/>
-                    </div>
-                    <div>
-                      <h4>{place.name}</h4>
-                      {!isLiked ? (
-                        <button className='wrapper-center like' onClick={() => {
-                          this.handleLikeClick(place._id)
-                        }}>
-                          <img src={process.env.PUBLIC_URL + '/images/unlike-icon.png'} alt='unlike icon'/>
-                        </button>
-                      ) : (
-                        <button className='wrapper-center like' onClick={() => {
-                          this.handleUnlikeClick(place._id)
-                        }}>
-                          <img src={process.env.PUBLIC_URL + '/images/like-icon.png'} alt='like icon'/>
-                        </button>
-                      ) }
-                    </div>
-                  </Link>
-                </Popup>
-              )} */}
               </>
             )
           })

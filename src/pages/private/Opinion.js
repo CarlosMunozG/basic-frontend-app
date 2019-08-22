@@ -5,8 +5,6 @@ import withAuth from '../../components/withAuth.js';
 import GoBackButton from '../../components/GoBackButton.js';
 import opinionsService from '../../services/opinions-services.js';
 import places from '../../services/places-services.js';
-// import Star from '../../components/Star.js';
-// import FiveStars from '../../components/FiveStars.js';
 
 class Opinion extends Component {
   state = {

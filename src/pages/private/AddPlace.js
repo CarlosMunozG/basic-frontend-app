@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Select from 'react-select';
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
@@ -36,6 +37,7 @@ class AddPlace extends Component {
       zoom: 14,
     },
     searchResultLayer: null,
+    redirect: false,
   };
   
   componentDidMount() {
@@ -57,7 +59,9 @@ class AddPlace extends Component {
     event.preventDefault();
     places.createPlace(this.state)
     .then( (place) => {
-      // console.log(place)
+      this.setState({
+        redirect: true,
+      })
     })
     .catch( error => console.log(error) )
   }
@@ -143,6 +147,7 @@ class AddPlace extends Component {
       marker,
       viewport,
       location,
+      redirect,
     } = this.state;
     
     return (
@@ -247,6 +252,7 @@ class AddPlace extends Component {
 
             <button type='submit'>Add new place</button>
           </form>
+          {redirect ? <Redirect to={'/places'}/> : null}
         </section>
       </section>
     )

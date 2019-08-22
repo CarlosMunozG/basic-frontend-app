@@ -1,9 +1,9 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const LinkText = props => {
   return (
-    <Link to={props.addRoute} className='oposite'>
+    <Link to={props.addRoute} className={`oposite ${props.class}`}>
       <div>
         <h3>{props.title}</h3>
         <p>{props.info}</p>

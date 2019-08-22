@@ -1,40 +1,21 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import withAuth from '../../components/withAuth.js';
-import userService from '../../services/users-services.js';
 import user from '../../services/users-services.js';
 import FileUploadComponent from '../../components/FileUpload.js';
 import GoBackButton from '../../components/GoBackButton.js';
 
 class ProfileEdit extends Component {
   state = {
-    username: '',
-    password: '',
-    images: [],
-    location: '',
-    email: '',
-    id: '',
+    username: this.props.user.username,
+    password: this.props.user.password,
+    images: this.props.user.images,
+    location: this.props.user.location,
+    email: this.props.user.email,
+    id: this.props.user._id,
     redirect: false,
     popUp: false,
-  }
-
-  componentDidMount(){
-    userService.getCurrentUser()
-    .then((response) => {
-      const user = response.data.newUser;
-      this.setState({
-        username: user.username,
-        password: '12345678',
-        images: user.images,
-        location: user.location,
-        email: user.email,
-        id: user._id,
-      })
-    })
-    .catch((error) =>{
-      console.log(error);
-    })
   }
 
   handleFormSubmit = (event) => {
@@ -51,7 +32,7 @@ class ProfileEdit extends Component {
   handleFormPasswordSubmit = (event) => {
     event.preventDefault();
     user.updateUser(this.state)
-    .then( (user) => {
+    .then( () => {
       this.setState({
         redirect: true,
         popUp: false,
@@ -60,14 +41,14 @@ class ProfileEdit extends Component {
     .catch( error => console.log(error) )
   }
 
-  handleChange = (event) => {  
+  handleChange = event => {  
     const {name, value} = event.target;
     this.setState({
       [name]: value,
     });
   }
   
-  getImage = (url) => {
+  getImage = url => {
     const { images } = this.state
     images.push(url)
     this.setState({
@@ -75,7 +56,7 @@ class ProfileEdit extends Component {
     })
   }
 
-  handleDeleteImage = (index) => {
+  handleDeleteImage = index => {
     const imagesCopy = this.state.images
     imagesCopy.splice(index, 1);
     this.setState({

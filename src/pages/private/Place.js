@@ -5,6 +5,9 @@ import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js';
 import GoBackButton from '../../components/GoBackButton.js';
 import ViewMapButton from '../../components/ViewMapButton.js';
+import LinkText from '../../components/LinkText.js';
+import LinkText2 from '../../components/LinkText2.js';
+import LinkTextWithMapping from '../../components/LinkTextWithMapping.js';
 
 
 class Place extends Component {
@@ -144,119 +147,91 @@ class Place extends Component {
                     {/* <p>Global puntuation {place.likes}</p> */}
                 </div>
 
-                <Link to={`/places/owner/${owner._id}`} className='model-block oposite first-to-see'>
-                  <div>
-                    <h5>Who created this place</h5>
-                    <p>{owner.username}</p>
-                  </div>
-                  <div className='wrapper-center arrow'>
-                    <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
-                  </div>
-                </Link>
+                <LinkText 
+                  addRoute={`/users/${owner._id}`}
+                  class='model-block first-to-see'
+                  title='Who created this place'
+                  info={owner.username}
+                />
 
-                <article to='/settings/profile' className='model-block oposite bottom'>
-                  <div>
-                    <h5>Categories</h5>
-                    {place.categories.map(item => {
-                      return(
-                        <p className='line-text'>{item} · </p>
-                      )
-                    })}
+                <LinkTextWithMapping 
+                  class='model-block bottom'
+                  title='Categories'
+                  array={place.categories}
+                />
 
-                  </div>
-                </article>
+                <LinkText 
+                  addRoute={`/places/owner/${owner._id}`}
+                  class='model-block'
+                  title='Images'
+                  info='View more images'
+                />
 
-                <Link to={`/places/owner/${owner._id}`} className='model-block oposite'>
-                  <div>
-                    <h5>Images</h5>
-                    <p>View more images</p>
-                  </div>
-                  <div className='wrapper-center arrow'>
-                    <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
-                  </div>
-                </Link>
+                <LinkText2
+                  class='model-block'
+                  title='Indoors - outdoors'
+                  info={place.inOutDoors}
+                />
 
-                <article to='/settings/profile' className='model-block oposite'>
-                  <div>
-                    <h5>Indoors - outdoors</h5>
-                    <p>{place.inOutDoors}</p>
-                  </div>
-                </article>
+                <LinkText2
+                  class='model-block'
+                  title='City - Countryside'
+                  info={place.locationType}
+                />
+
+                <LinkText2
+                  class='model-block'
+                  title='City - Countryside'
+                  info={place.locationType}
+                />
                 
-                <article to='/settings/profile' className='model-block oposite'>
-                  <div>
-                    <h5>City - Countryside</h5>
-                    <p>{place.locationType}</p>
-                  </div>
-                </article>
+                <LinkText2
+                  class='model-block'
+                  title='Free - Paid'
+                  info={place.money}
+                />
                 
-                <article to='/settings/profile' className='model-block oposite'>
-                  <div>
-                    <h5>Free - Paid</h5>
-                    <p>{place.money}</p>
-                  </div>
-                </article>
+                <LinkText2
+                  class='model-block'
+                  title='Description'
+                  info={place.description}
+                />
                 
-                <article to='/settings/profile' className='model-block oposite'>
-                  <div>
-                    <h5>Description</h5>
-                    <p>{place.description}</p>
-                  </div>
-                </article>
+                <LinkTextWithMapping 
+                  class='model-block bottom'
+                  title='When to go'
+                  array={place.bestMomentOfYear}
+                />
 
-                <article to='/settings/profile' className='model-block oposite bottom'>
-                  <div>
-                    <h5>When to go</h5>
-                    {place.bestMomentOfYear.map(item => {
-                      return(
-                        <p className='line-text'>{item} · </p>
-                      )
-                    })}
-                  </div>
-                </article>
-
-                <Link to={`/places/owner/${owner._id}`} className='model-block oposite'>
-                  <div>
-                    <h5>Opinions</h5>
-                    <p>View all opinions of this place</p>
-                  </div>
-                  <div className='wrapper-center arrow'>
-                    <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
-                  </div>
-                </Link>
+                <LinkText 
+                  addRoute={`/places/owner/${owner._id}`}
+                  class='model-block'
+                  title='Opinions'
+                  info='View all opinions of this place'
+                />
 
                 {this.userDidGaveOpinion() 
                 ? ( 
                   this.state.opinions.map(opinion => {
                     if(opinion.owner === this.props.user._id){
                       return(
-                        <Link to={`/places/${place._id}/opinion/${opinion._id}/update`} className='model-block oposite'>
-                          <div>
-                            <h5>Your opinion</h5>
-                            <p>Change your opinion</p>
-                          </div>
-                          <div className='wrapper-center arrow'>
-                            <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
-                          </div>
-                        </Link>
-                        // <Link 
-                        //   className='bottom-margin'
-                        //   to={`/places/${place._id}/opinion/${opinion._id}/update`}
-                        // >Change your opinion</Link>
+                        <LinkText 
+                          addRoute={`/places/${place._id}/opinion/${opinion._id}/update`}
+                          class='model-block'
+                          title='Your opinion'
+                          info='Change your opinion'
+                        />
                       )
                     }
                   })
                 )
                 :(
-                <Link to={`/places/${place._id}/opinion`} className='model-block oposite'>
-                  <div>
-                    <h5>Your opinion</h5>
-                    <p>Give an opinion</p>
-                  </div>
-                  <div className='wrapper-center arrow'>
-                    <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
-                  </div>
-                </Link>
+                <LinkText 
+                  addRoute={`/places/${place._id}/opinion`}
+                  class='model-block'
+                  title='Your opinion'
+                  info='Give an opinion'
+                />
                 )}
               </section>
             </>

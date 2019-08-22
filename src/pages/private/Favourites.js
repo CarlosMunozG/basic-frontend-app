@@ -19,7 +19,7 @@ const Favourites = props => {
           img={'my-places.jpg'}
         />
         <MainButton 
-          addRoute={'/friends'}
+          addRoute={'/users/my-friends'}
           title={'My favourite users'}
           img={'my-friends.jpg'}
         />

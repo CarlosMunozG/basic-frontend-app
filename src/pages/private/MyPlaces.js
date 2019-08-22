@@ -39,6 +39,7 @@ class MyPlaces extends Component {
             myPlaces.map((place) => {
               return(
                 <LinkList 
+                  addRoute='/places'
                   id={place._id}
                   images={place.images}
                   name={place.name}

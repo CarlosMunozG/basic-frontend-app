@@ -25,7 +25,7 @@ const Private = props => {
           img={'places.jpg'}
         />
         <MainButton 
-          addRoute={''}
+          addRoute={'/users'}
           title={'Find people'}
           img={'people.jpg'}
         />

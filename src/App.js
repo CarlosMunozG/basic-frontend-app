@@ -30,6 +30,11 @@ import Owner from './pages/private/Owner.js';
 import Favourites from './pages/private/Favourites.js';
 import MyFavouritePlaces from './pages/private/MyFavouritePlaces.js';
 import MyFavouritePlacesMap from './pages/private/MyFavouritePlacesMap.js';
+import UserList from './pages/private/UserList.js';
+import User from './pages/private/User.js';
+import MyFavouriteFriends from './pages/private/MyFavouriteFriends.js';
+import UserFriends from './pages/private/UserFriends.js';
+import UserPlaces from './pages/private/UserPlaces.js';
 
 import './App.css';
 
@@ -72,6 +77,11 @@ class App extends Component {
               <PrivateRoute path="/favourites" exact component={Favourites} />
               <PrivateRoute path="/favourites/places" exact component={MyFavouritePlaces} />
               <PrivateRoute path="/favourites/places/map" exact component={MyFavouritePlacesMap} />
+              <PrivateRoute path="/users" exact component={UserList} />
+              <PrivateRoute path="/users/my-friends" exact component={MyFavouriteFriends} />
+              <PrivateRoute path="/users/:id" exact component={User} />
+              <PrivateRoute path="/users/:id/friends" exact component={UserFriends} />
+              <PrivateRoute path="/users/:id/places" exact component={UserPlaces} />
               <Route component={NotFound} />
             </Switch>
           </div>
