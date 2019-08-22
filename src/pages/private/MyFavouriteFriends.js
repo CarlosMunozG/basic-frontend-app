@@ -16,7 +16,6 @@ class MyFriends extends Component {
   componentDidMount(){
     userService.getAllMyFavourites()
     .then((response) => {
-      console.log(response.data);
       this.setState({
         myFriends: response.data.newUser.friends,
       })

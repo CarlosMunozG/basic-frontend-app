@@ -5,17 +5,32 @@ import withAuth from '../../components/withAuth.js';
 import user from '../../services/users-services.js';
 import FileUploadComponent from '../../components/FileUpload.js';
 import GoBackButton from '../../components/GoBackButton.js';
+import userService from '../../services/users-services.js';
 
 class ProfileEdit extends Component {
   state = {
-    username: this.props.user.username,
-    password: this.props.user.password,
-    images: this.props.user.images,
-    location: this.props.user.location,
-    email: this.props.user.email,
-    id: this.props.user._id,
+    username: '',
+    password: '',
+    images: [],
+    location: '',
+    email: '',
+    id: '',
     redirect: false,
     popUp: false,
+  }
+
+  componentDidMount(){
+    userService.getCurrentUser()
+    .then(response => {
+      this.setState({
+        username: response.data.newUser.username,
+        password: '12345678',
+        images: response.data.newUser.images,
+        location: response.data.newUser.location,
+        email: response.data.newUser.email,
+        id: response.data.newUser.email,
+      })
+    }).catch( error => console.log(error));
   }
 
   handleFormSubmit = (event) => {

@@ -5,7 +5,6 @@ import withAuth from '../../components/withAuth.js';
 import GoBackButton from '../../components/GoBackButton.js';
 import places from '../../services/places-services.js';
 import AddButton from '../../components/AddButton.js';
-import ViewMapButton from '../../components/ViewMapButton.js';
 import LinkList from '../../components/LinkList.js';
 
 
@@ -31,7 +30,6 @@ class MyPlaces extends Component {
         <header>
           <GoBackButton />
           <h1>My Favourite Places</h1>
-          <ViewMapButton addRoute='/favourites/places/map'/>
           <AddButton addRoute='/places'/>
         </header>
         <section>

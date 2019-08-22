@@ -21,7 +21,6 @@ class User extends Component {
     userService.getUser(id)
     .then((response) => {
       const { username, friends, favouritePlaces, _id, images } = response.data.newUser;
-      console.log(response.data);
       this.setState({
         username,
         friends,

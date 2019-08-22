@@ -12,7 +12,7 @@ class MapPointer extends Component {
 
 
   render() {
-    const { key, latitude, longitude, placeId, placeImages, placeName, placeLikes, placeCategories } = this.props;
+    const { key, latitude, longitude, placeId, placeImages, placeName, placeCategories } = this.props;
     return (
       <>
       <Marker key={placeId}

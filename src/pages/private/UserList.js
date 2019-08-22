@@ -24,11 +24,9 @@ class UserList extends Component {
   }
 
   excludeCurrentUser = () => {
-    const position = this.state.users.indexOf(this.props.user._id);
-    console.log(position);
-    const copyUsers = this.state.users;
-    const arrayUsers = copyUsers.splice(position, 1);
-    console.log(arrayUsers);
+    // const position = this.state.users.indexOf(this.props.user._id);
+    // const copyUsers = this.state.users;
+    // const arrayUsers = copyUsers.splice(position, 1);
   }
 
 

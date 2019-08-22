@@ -9,7 +9,6 @@ import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js';
 import userService from '../../services/users-services.js';
 import AddButton from '../../components/AddButton.js';
-import MapPointer from '../../components/MapPointer.js';
 
 const token='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
 const geolocateStyle = { float:'right', margin:'10px', padding:'10px' };
@@ -34,7 +33,6 @@ class Places extends Component {
     this.props.getLocation();
     places.getAllMyFavouritePlaces()
     .then((response) => {
-      console.log('response', response);
       this.setState({
         myFavouritePlaces: response.data.listOfMyPlaces.favouritePlaces,
       })
@@ -92,7 +90,7 @@ class Places extends Component {
 
 
   render() {
-    const { viewport, myFavouritePlaces, selectedPoint, isLiked } = this.state;
+    const { viewport } = this.state;
     return (
       <div className='mapbox-in-page'>
       <MapGL

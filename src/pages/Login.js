@@ -9,6 +9,7 @@ class Login extends Component {
     username: '',
     password: '',
     images: [],
+    error: '',
   }
 
   handleFormSubmit = (event) => {
@@ -17,9 +18,12 @@ class Login extends Component {
 
     this.props.login({ username, password, images })
     .then( (user) => {
-      console.log(user)
+
     })
-    .catch( error => console.log(error) )
+    .catch( error => {
+      this.setState({ error: error.response.data.error }) 
+      console.log(error)
+    })
   }
 
   handleChange = (event) => {  
@@ -28,7 +32,7 @@ class Login extends Component {
   }
 
   render() {
-    const { username, password } = this.state;
+    const { username, password, error } = this.state;
     return (
       <>
       <div className='intro-pos'>
@@ -42,6 +46,7 @@ class Login extends Component {
             <button type='submit'>Login</button>
           </form>
           <Link className='form-link' to={'/signup'}>You don't have an accout yet? <span>Signup</span></Link>
+          { error && <p className='error-message'>{this.state.error}</p> }
         </div>
       </section>
     </>

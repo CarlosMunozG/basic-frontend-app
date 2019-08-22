@@ -36,20 +36,10 @@ class OpinionsService {
   }
 
   deleteOpinion(id) {
-    console.log(id);
     return this.opinions.delete(`/opinions/${id}/delete`)
       .then(data => data)
   }
 
-  // addLike(placeId) {
-  //   return this.opinions.put(`/opinions/${placeId}/like`)
-  //     .then(({ data }) => data);
-  // }
-
-  // deleteLike(placeId) {
-  //   return this.opinions.put(`/opinions/${placeId}/unlike`)
-  //     .then(({ data }) => data);
-  // }
 }
 
 const opinionsService = new OpinionsService();

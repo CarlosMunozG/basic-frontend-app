@@ -31,7 +31,6 @@ class SearchableMap extends Component {
   }
 
   _onClickMap = (event) => {
-    console.log(event.lngLat);
     const newLat = event.lngLat[0];
     const newLon = event.lngLat[1];
     this.setState({
@@ -82,7 +81,6 @@ class SearchableMap extends Component {
               <Marker latitude={markerLat} longitude={markerLon}>
                 <div className="signal"></div>
               </Marker>
-              {console.log('aqui')}
               </>
             ) : null }
             <Link to='Places-list' className='view-list-button'>View list</Link>

@@ -23,15 +23,13 @@ class Signup extends Component {
       this.setState({
           username: '',
           password: '',
+          error:''
       });
     })
-    .catch( error => 
-      { this.setState({
-        error: 'error'
-      })
-        console.log(this.props);
-        console.log(error);}
-    )
+    .catch( error => {
+      this.setState({ error: error.response.data.error }) 
+      console.log(error)
+    })
   }
 
   handleChange = (event) => {  
@@ -55,6 +53,7 @@ class Signup extends Component {
           </form>
           {message ? <p>{error}</p> : null }
           <Link className='form-link' to={'/login'}>Already have account? <span>Login</span></Link>
+          { error && <p className='error-message'>{this.state.error}</p> }
         </div>
       </section>
       </>

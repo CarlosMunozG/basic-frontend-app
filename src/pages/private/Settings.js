@@ -23,7 +23,7 @@ function Settings(props) {
           info='Places you created'
         />
         <LinkText
-          addRoute='/settings/my-opinions'
+          addRoute=''
           title='My opinions'
           info='Opinions you gave'
         />

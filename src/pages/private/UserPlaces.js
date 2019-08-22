@@ -17,7 +17,6 @@ class MyPlaces extends Component {
     const { id } = this.props.match.params;
     userService.getUser(id)
     .then((response) => {
-      console.log(response.data);
       this.setState({
         username: response.data.newUser.username,
         places: response.data.newUser.favouritePlaces,

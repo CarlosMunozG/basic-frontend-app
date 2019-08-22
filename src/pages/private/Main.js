@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { withRouter} from 'react-router-dom';
 
 import withAuth from '../../components/withAuth.js';
 import MainButton from '../../components/MainButton.js';
+import userService from '../../services/users-services.js';
 
-const Private = props => {
-  const { username, images } = props.user;
+
+class Private extends Component {
+  state = {
+    username: '',
+    images: [],
+  }
+
+  componentDidMount(){
+    userService.getCurrentUser()
+    .then(response => {
+      this.setState({
+        username: response.data.newUser.username,
+        images: response.data.newUser.images,
+      })
+    }).catch(error => console.log(error));
+  }
+
+
+render() {
+  const { username, images } = this.state;
   return (
     <section className='main'>
       <header>
@@ -36,7 +56,7 @@ const Private = props => {
         />
       </section>
     </section>
-  )
+  )}
 }
 
-export default withAuth(Private);
+export default withRouter(withAuth(Private));

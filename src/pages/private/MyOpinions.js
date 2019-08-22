@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
 
 import withAuth from '../../components/withAuth.js';
 import GoBackButton from '../../components/GoBackButton.js';
@@ -24,7 +23,6 @@ class MyOpinions extends Component {
 
   render() {
     const { myOpinions } = this.state;
-    console.log(myOpinions);
     return (
       <section className='my-places'>
         <header>
@@ -34,7 +32,6 @@ class MyOpinions extends Component {
         <section>
           {myOpinions.length > 0 ? (
             myOpinions.map((opinion) => {
-              console.log(opinion);
               return(
                 <LinkText 
                   addRoute={`/opinions/${opinion._id}`}

@@ -7,6 +7,11 @@ class UserService {
       withCredentials: true,
     })
   }
+
+  getCurrentUser(){
+    return this.user.get('/users/current')
+    .then(response => response);
+  }
     
   getAllUsers(){
     return this.user.get('/users')

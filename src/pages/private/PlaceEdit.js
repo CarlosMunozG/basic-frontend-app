@@ -86,7 +86,6 @@ class ProfileEdit extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
     places.updatePlace(this.state)
       .then((response) => {
         this.setState({
