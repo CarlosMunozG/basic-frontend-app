@@ -15,11 +15,11 @@ class Navbar extends Component {
                 <img src={process.env.PUBLIC_URL + '/images/dogjoy-home-icon.png'} alt='home icon'/>
               </div>
             </Link>
-            <Link to='/search'>
+            {/* <Link to='/search'>
               <div className='wrapper-center icon-shadow'>
                 <img src={process.env.PUBLIC_URL + '/images/dogjoy-search-icon.png'} alt='search icon'/>
               </div>
-            </Link>
+            </Link> */}
             <Link to='/favourites'>
               <div className='wrapper-center icon-shadow'>
                <img src={process.env.PUBLIC_URL + '/images/dogjoy-favourites-icon.png'} alt='favourites icon'/>

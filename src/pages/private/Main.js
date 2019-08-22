@@ -1,63 +1,42 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+
 import withAuth from '../../components/withAuth.js';
-import userService from '../../services/users-services.js';
+import MainButton from '../../components/MainButton.js';
 
-
-class Private extends Component {
-  state = {
-    username: '',
-    images: [],
-  }
-
-  componentDidMount() {
-    userService.getCurrentUser()
-    .then((response) => {
-      const user = response.data.newUser;
-      this.setState({
-        username: user.username,
-        images: user.images,
-      })
-    })
-    .catch((error) =>{
-      console.log(error);
-    })
-  }
-
-  render() {
-    const { username, images } = this.state;
-    return (
-      <section className='main'>
-        <header>
-          <h1>Welcome {username}</h1>
-          {/* What do Bobby wanna do? poner el nombre de la mascota cuando lo tenga */}
-          <p>What do your pet wanna do?</p>
-        </header>
-        <section>
-          {images.length > 0 ? null: (
-            <Link to='settings/profile/edit'className='button button-main normal-shadow'>
-              <div className='wrapper-center'>
-                {/* <img src='' alt=''/> */}
-              </div>
-              <p>Complete Profile</p>
-            </Link>
-          )}
-          <Link to='/places' className='button button-main normal-shadow'>
-            <div className='wrapper-center'>
-              {/* <img src='' alt=''/> */}
-            </div>
-            <p>Find places</p>
-          </Link>
-          <Link to='' className='button button-main normal-shadow'>
-            <div className='wrapper-center'>
-              {/* <img src='' alt=''/> */}
-            </div>
-            <p>Find events</p>
-          </Link>
-        </section>
+const Private = props => {
+  const { username, images } = props.user;
+  return (
+    <section className='main'>
+      <header>
+        <h1>Welcome {username}</h1>
+        <p>What do your pet wanna do?</p>
+      </header>
+      <section>
+        {images.length > 0 ? null: (
+          <MainButton 
+            addRoute={'/settings/profile/edit'}
+            title={'Complete Profile'}
+            img={'complete-profile.jpg'}
+          />
+        )}
+        <MainButton 
+          addRoute={'/places'}
+          title={'Find places'}
+          img={'places.jpg'}
+        />
+        <MainButton 
+          addRoute={''}
+          title={'Find people'}
+          img={'people.jpg'}
+        />
+        <MainButton 
+          addRoute={''}
+          title={'Find events'}
+          img={'events.jpg'}
+        />
       </section>
-    )
-  }
+    </section>
+  )
 }
 
 export default withAuth(Private);

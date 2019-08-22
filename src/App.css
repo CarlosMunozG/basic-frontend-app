@@ -264,6 +264,29 @@ img{
   right: 11%;
 }
 
+.first-message{
+  width:100%;
+  height: auto;
+  position:fixed;
+  top:30vh;
+}
+
+.column{
+  flex-direction: column;
+}
+
+.line-text{
+  display: inline;
+}
+
+.bottom{
+  padding-bottom:20px;
+}
+
+.bottom-margin{
+  margin-bottom:20px;
+}
+
 /* ---- forms ---- */
 
 form label{
@@ -304,8 +327,6 @@ form button, .like-form-button, .button-pop-up{
 form select{
   background-color: var(--third-color);
 }
-
-
 
 a.form-link{
   display: block;
@@ -477,10 +498,11 @@ section.main section{
   left: 20px;
   font-weight: 400;
   font-size: 14px;
+  text-shadow: 0px 0px 10px rgba(77, 51, 3, 0.6);
 }
 
 .button-main div{
-  width: 40%;
+  width: 100%;
   height: 100%;
 }
 
@@ -524,16 +546,36 @@ section.model-page .profile-img img{
   width:100%;
 }
 
-section.model-page p, section.model-page h4{
-  text-align:center;
+section.model-page section article, section.model-page .model-block{
+  width:80%;
+  height:auto;
+  margin: 20px 10%;
+  border-bottom: 1px solid #dfdede;
+  padding-bottom:20px;
 }
 
-section.model-page h4{
-  margin-top: 40px;
+section.model-page .first-to-see{
+  margin-top:130px;
+  border-top:1px solid #dfdede;
+  padding-top: 20px;
 }
+
 
 section.model-page p{
   color: var(--second-color);
+}
+
+section.model-page hr{
+  width:80%;
+  height:1px;
+  background-color: var(--second-color);
+  margin: 20px auto;
+  border: none;
+}
+
+section.model-page h5{
+  font-weight: 300;
+  color: var(--main-color);
 }
 
 .edit-button{
@@ -572,6 +614,10 @@ section.my-places section{
 section.my-places section a{
   width: 40%;
   height: 30vh;
+}
+
+section.my-places section a.view-in-map{
+  height: auto;
 }
 
 section.my-places section a div{
@@ -688,4 +734,8 @@ section.places section{
 .overlays a.add{
   top:70px;
   right:25px;
+}
+
+.mapboxgl-popup{
+  z-index:2;
 }

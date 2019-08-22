@@ -38,7 +38,7 @@ class MapPointer extends Component {
         <Popup
           latitude={latitude}
           longitude={longitude}
-          onClick={false}
+          closeOnClick={false}
           onClose={()=>{
             this.setState({
               selectedPoint: false,

@@ -27,6 +27,9 @@ import AddPlace from './pages/private/AddPlace.js';
 import PlaceEdit from './pages/private/PlaceEdit.js';
 import SearchPlaces from './pages/private/SearchPlaces.js';
 import Owner from './pages/private/Owner.js';
+import Favourites from './pages/private/Favourites.js';
+import MyFavouritePlaces from './pages/private/MyFavouritePlaces.js';
+import MyFavouritePlacesMap from './pages/private/MyFavouritePlacesMap.js';
 
 import './App.css';
 
@@ -65,8 +68,10 @@ class App extends Component {
               <PrivateRoute path="/places/:id/edit" exact component={PlaceEdit} />
               <PrivateRoute path="/places/:id/opinion" exact component={Opinion} />
               <PrivateRoute path="/places/:id/opinion/:opinionId/update" exact component={OpinionEdit} />
-              <PrivateRoute path="/settings" exact component={Settings} />
               <PrivateRoute path="/places/owner/:id" exact component={Owner} />
+              <PrivateRoute path="/favourites" exact component={Favourites} />
+              <PrivateRoute path="/favourites/places" exact component={MyFavouritePlaces} />
+              <PrivateRoute path="/favourites/places/map" exact component={MyFavouritePlacesMap} />
               <Route component={NotFound} />
             </Switch>
           </div>

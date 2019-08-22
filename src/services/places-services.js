@@ -18,6 +18,11 @@ class PlacesService {
     .then(response => response);
   }
 
+  getAllMyFavouritePlaces(){
+    return this.places.get('/places/myFavouritePlaces')
+    .then(response => response);
+  }
+
   getOnePlace(id){
     return this.places.get(`places/${id}`)
     .then(response => response);

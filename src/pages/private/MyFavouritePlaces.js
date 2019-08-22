@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 import withAuth from '../../components/withAuth.js';
 import GoBackButton from '../../components/GoBackButton.js';
@@ -10,33 +11,32 @@ import LinkList from '../../components/LinkList.js';
 
 class MyPlaces extends Component {
   state = {
-    myPlaces: []
+    myFavouritePlaces: []
   }
 
   componentDidMount(){
-    places.getAllMyPlaces()
+    places.getAllMyFavouritePlaces()
     .then((response) => {
-      const { listOfMyPlaces } = response.data;
       this.setState({
-        myPlaces: listOfMyPlaces,
+        myFavouritePlaces: response.data.listOfMyPlaces.favouritePlaces,
       })
     })
     .catch(error =>{ console.log(error) })
   }
 
   render() {
-    const { myPlaces } = this.state;
+    const { myFavouritePlaces } = this.state;
     return (
       <section className='my-places'>
         <header>
           <GoBackButton />
-          <h1>My Places</h1>
-          <ViewMapButton addRoute='/places'/>
-          <AddButton addRoute='/places/add'/>
+          <h1>My Favourite Places</h1>
+          <ViewMapButton addRoute='/favourites/places/map'/>
+          <AddButton addRoute='/places'/>
         </header>
         <section>
-          {myPlaces.length > 0 ? (
-            myPlaces.map((place) => {
+          {myFavouritePlaces.length > 0 ? (
+            myFavouritePlaces.map((place) => {
               return(
                 <LinkList 
                   id={place._id}
@@ -45,7 +45,15 @@ class MyPlaces extends Component {
                 />
               )
             })
-          ) : <p>Your list of places created by you is empty</p>}
+          ) : (
+            <div className='first-message'>
+              <figure className='wrapper-center column'>
+                <p>Your list of favourite places is empty.</p>
+                <p>Take a look at the map</p>
+                <Link className='button-mini view-in-map icon-shadow' to='/places'>Map</Link>
+              </figure>
+            </div>
+          )}
         </section>
       </section>
     )
@@ -53,4 +61,3 @@ class MyPlaces extends Component {
 }
 
 export default withAuth(MyPlaces);
-

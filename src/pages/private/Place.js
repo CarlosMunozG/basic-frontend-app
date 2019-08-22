@@ -89,14 +89,16 @@ class Place extends Component {
     })
   }
 
-  checkUserOpinion = () => {
+  userDidGaveOpinion = () => {
     const { opinions }  = this.state;
     const userId = this.props.user._id;
-    return opinions.includes(opinion => 
-      opinion.owner.toString() === userId
-    )
+    let isOpinionFound = false;
+    opinions.forEach((opinion) => {
+      if (opinion.owner === userId) isOpinionFound = true;
+      return;
+    })
+    return isOpinionFound;
   }
-
 
 
   render() {
@@ -139,41 +141,123 @@ class Place extends Component {
                       </div>
                     </>
                   ): null }             
-                    <p>Global puntuation {place.likes}</p>
+                    {/* <p>Global puntuation {place.likes}</p> */}
                 </div>
+
+                <Link to={`/places/owner/${owner._id}`} className='model-block oposite first-to-see'>
                   <div>
-                    <h3>Info</h3>
-                    <p>indoors/outdoors: {place.inOutDoors}</p>
+                    <h5>Who created this place</h5>
+                    <p>{owner.username}</p>
+                  </div>
+                  <div className='wrapper-center arrow'>
+                    <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
+                  </div>
+                </Link>
+
+                <article to='/settings/profile' className='model-block oposite bottom'>
+                  <div>
+                    <h5>Categories</h5>
+                    {place.categories.map(item => {
+                      return(
+                        <p className='line-text'>{item} · </p>
+                      )
+                    })}
+
+                  </div>
+                </article>
+
+                <Link to={`/places/owner/${owner._id}`} className='model-block oposite'>
+                  <div>
+                    <h5>Images</h5>
+                    <p>View more images</p>
+                  </div>
+                  <div className='wrapper-center arrow'>
+                    <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
+                  </div>
+                </Link>
+
+                <article to='/settings/profile' className='model-block oposite'>
+                  <div>
+                    <h5>Indoors - outdoors</h5>
+                    <p>{place.inOutDoors}</p>
+                  </div>
+                </article>
+                
+                <article to='/settings/profile' className='model-block oposite'>
+                  <div>
+                    <h5>City - Countryside</h5>
                     <p>{place.locationType}</p>
-                    <p>categories: {place.categories}</p>
-                    <p>free or paid: {place.money}</p>
                   </div>
+                </article>
+                
+                <article to='/settings/profile' className='model-block oposite'>
                   <div>
-                    <h3>Location</h3>
-                    <p>Postal Code: {place.postalCode}</p>
+                    <h5>Free - Paid</h5>
+                    <p>{place.money}</p>
                   </div>
+                </article>
+                
+                <article to='/settings/profile' className='model-block oposite'>
                   <div>
-                    <h3>Contact info</h3>
-                    <Link to={`/places/owner/${owner._id}`}>Owner: {owner.username}</Link>
-                  </div>
-                  <div>
-                    <h3>Description</h3>
-                    <p>open: {place.bestMomentOfYear}</p>
+                    <h5>Description</h5>
                     <p>{place.description}</p>
                   </div>
+                </article>
+
+                <article to='/settings/profile' className='model-block oposite bottom'>
                   <div>
-                    <h3>Opinions</h3>
-                    {this.checkUserOpinion() ? ( 
-                      <Link to={`/places/${place._id}/opinion`}>Give and opinion</Link>
-                     ) : 
-                     this.state.opinions.map(opinion => {
-                       if(opinion.owner === this.props.user._id){
-                         return(
-                           <Link to={`/places/${place._id}/opinion/${opinion._id}/update`}>Change your opinion</Link>
-                         )
-                       }
-                     })}
+                    <h5>When to go</h5>
+                    {place.bestMomentOfYear.map(item => {
+                      return(
+                        <p className='line-text'>{item} · </p>
+                      )
+                    })}
                   </div>
+                </article>
+
+                <Link to={`/places/owner/${owner._id}`} className='model-block oposite'>
+                  <div>
+                    <h5>Opinions</h5>
+                    <p>View all opinions of this place</p>
+                  </div>
+                  <div className='wrapper-center arrow'>
+                    <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
+                  </div>
+                </Link>
+
+                {this.userDidGaveOpinion() 
+                ? ( 
+                  this.state.opinions.map(opinion => {
+                    if(opinion.owner === this.props.user._id){
+                      return(
+                        <Link to={`/places/${place._id}/opinion/${opinion._id}/update`} className='model-block oposite'>
+                          <div>
+                            <h5>Your opinion</h5>
+                            <p>Change your opinion</p>
+                          </div>
+                          <div className='wrapper-center arrow'>
+                            <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
+                          </div>
+                        </Link>
+                        // <Link 
+                        //   className='bottom-margin'
+                        //   to={`/places/${place._id}/opinion/${opinion._id}/update`}
+                        // >Change your opinion</Link>
+                      )
+                    }
+                  })
+                )
+                :(
+                <Link to={`/places/${place._id}/opinion`} className='model-block oposite'>
+                  <div>
+                    <h5>Your opinion</h5>
+                    <p>Give an opinion</p>
+                  </div>
+                  <div className='wrapper-center arrow'>
+                    <img src={process.env.PUBLIC_URL + '/images/arrow.png'} alt='arrow button'/>
+                  </div>
+                </Link>
+                )}
               </section>
             </>
           ): <p>Loading...</p> }
