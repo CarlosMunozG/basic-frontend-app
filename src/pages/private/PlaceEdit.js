@@ -11,6 +11,8 @@ import places from '../../services/places-services.js';
 import FileUploadComponent from '../../components/FileUpload.js';
 import {momentOptions, categoryOptions} from '../../helpers/placeHelper.js';
 import GoBackButton from '../../components/GoBackButton.js';
+import { processError } from '../../helpers/processError.js';
+
 
 const token='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
 const geolocateStyle = { float:'right', margin:'10px', padding:'10px' };
@@ -38,6 +40,7 @@ class ProfileEdit extends Component {
     searchResultLayer: null,
     location: [],
     render: false,
+    error: '',
   }
 
   componentDidMount() {
@@ -92,7 +95,10 @@ class ProfileEdit extends Component {
           redirect: true,
         })
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log(error)
+        this.setState({ error: processError(error.response.status) });
+      })
   }
 
   handleChange = (event) => {
@@ -101,6 +107,17 @@ class ProfileEdit extends Component {
       [name]: value,
     });
   }
+
+  handleMultipleMomentsSelect = (selectedOptions) => {  
+    const bestMomentOfYear = selectedOptions.map((option) => option.value )
+    this.setState({ bestMomentOfYear });
+  }
+
+  handleMultipleCategoriesSelect = (selectedOptions) => { 
+    const categories = selectedOptions.map((option)=> option.value)
+    this.setState({ categories });
+  }
+
 
   getImage = (url) => {
     const { images } = this.state
@@ -186,6 +203,7 @@ class ProfileEdit extends Component {
       viewport,
       location,
       render,
+      error,
     } = this.state;
     return (
       <>
@@ -217,8 +235,8 @@ class ProfileEdit extends Component {
                 )}
             </select>
             <label htmlFor='bestMomentOfYear'>When to go</label>
-            {bestMomentOfYear.length > 0 && (            
-              <>
+            {bestMomentOfYear.length > 0 ? ( 
+              <>           
                 <Select
                   defaultValue={this.renderInputs(bestMomentOfYear, true) }
                   isMulti
@@ -227,20 +245,35 @@ class ProfileEdit extends Component {
                   onChange={this.handleMultipleMomentsSelect}
                 />
               </>
-            )}
-            <label htmlFor='categories'>Categories</label>
-            {categories.length > 0 && (            
+            ) : (
               <>
                 <Select
-                  defaultValue={this.renderInputs(categories, false)}
+                  defaultValue={[]}
                   isMulti
-                  name='categories'
-                  options={categoryOptions}
+                  name='bestMomentOfYear'
+                  options={momentOptions}
                   onChange={this.handleMultipleMomentsSelect}
                 />
               </>
             )}
-
+            <label htmlFor='categories'>Categories</label>
+            {categories.length > 0 ? (            
+              <Select
+                defaultValue={this.renderInputs(categories, false)}
+                isMulti
+                name='categories'
+                options={categoryOptions}
+                onChange={this.handleMultipleCategoriesSelect}
+              />
+            ) : (
+              <Select
+                defaultValue={[]}
+                isMulti
+                name='categories'
+                options={categoryOptions}
+                onChange={this.handleMultipleCategoriesSelect}
+              />            
+            )}
             <label htmlFor='description'>Description</label>
             <input id='description' type='text' name='description' value={description} onChange={this.handleChange} />
             <label htmlFor='inOutDoors'>Indoors - Outdoors</label>
@@ -325,13 +358,9 @@ class ProfileEdit extends Component {
                 </Marker>
               </MapGL>
             </div>
-
-
-
-
-
             <button type='submit'>Edit place</button>
           </form>
+          { error && <p className='error-message'>{this.state.error}</p> }
           {redirect ? <Redirect to={`/places/${_id}`}/> : null}
         </section>
       </section>

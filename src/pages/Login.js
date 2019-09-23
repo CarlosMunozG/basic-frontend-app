@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import GoBackButton from '../components/GoBackButton.js';
 import withAuth from '../components/withAuth.js';
+import { processError } from '../helpers/processError';
 
 class Login extends Component {
   state = {
@@ -17,11 +18,10 @@ class Login extends Component {
     const { username, password, images } = this.state
 
     this.props.login({ username, password, images })
-    .then( (user) => {
-
+    .then( () => {
     })
     .catch( error => {
-      this.setState({ error: error.response.data.error }) 
+      this.setState({ error: processError(error.response.status) }) 
       console.log(error)
     })
   }

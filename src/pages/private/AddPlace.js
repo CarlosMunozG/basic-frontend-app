@@ -6,12 +6,12 @@ import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import MapGL, { Marker, GeolocateControl } from "react-map-gl";
 import Geocoder from "react-map-gl-geocoder";
 
-
 import withAuth from '../../components/withAuth.js';
 import places from '../../services/places-services.js'
 import FileUploadComponent from '../../components/FileUpload.js';
 import { momentOptions, categoryOptions } from '../../helpers/placeHelper.js';
 import GoBackButton from '../../components/GoBackButton.js';
+import { processError } from '../../helpers/processError.js';
 
 const token='pk.eyJ1IjoiY2FybG9zLW11bm96IiwiYSI6ImNqemJieW9ibjAwM2EzY28wN244ajd6NHQifQ.hHRYI2BP8pDWsgI_iVvPwA';
 const geolocateStyle = { float:'right', margin:'10px', padding:'10px' };
@@ -63,7 +63,10 @@ class AddPlace extends Component {
         redirect: true,
       })
     })
-    .catch( error => console.log(error) )
+    .catch( error => {
+      this.setState({ error: processError(error.response.status) });
+      console.log(error.response);
+    })
   }
 
   handleChange = (event) => {  
@@ -148,6 +151,7 @@ class AddPlace extends Component {
       viewport,
       location,
       redirect,
+      error,
     } = this.state;
     
     return (
@@ -252,6 +256,7 @@ class AddPlace extends Component {
 
             <button type='submit'>Add new place</button>
           </form>
+          { error && <p className='error-message'>{this.state.error}</p> }
           {redirect ? <Redirect to={'/places'}/> : null}
         </section>
       </section>

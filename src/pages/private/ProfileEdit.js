@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import withAuth from '../../components/withAuth.js';
-import user from '../../services/users-services.js';
 import FileUploadComponent from '../../components/FileUpload.js';
 import GoBackButton from '../../components/GoBackButton.js';
 import userService from '../../services/users-services.js';
@@ -10,7 +9,6 @@ import userService from '../../services/users-services.js';
 class ProfileEdit extends Component {
   state = {
     username: '',
-    password: '',
     images: [],
     location: '',
     email: '',
@@ -24,7 +22,6 @@ class ProfileEdit extends Component {
     .then(response => {
       this.setState({
         username: response.data.newUser.username,
-        password: '12345678',
         images: response.data.newUser.images,
         location: response.data.newUser.location,
         email: response.data.newUser.email,
@@ -35,8 +32,9 @@ class ProfileEdit extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    user.updateUser(this.state)
+    userService.updateUser(this.state)
     .then( (user) => {
+      console.log(this.state);
       this.setState({
         redirect: true,
       })
@@ -46,7 +44,7 @@ class ProfileEdit extends Component {
 
   handleFormPasswordSubmit = (event) => {
     event.preventDefault();
-    user.updateUser(this.state)
+    userService.updateUser(this.state)
     .then( () => {
       this.setState({
         redirect: true,
@@ -130,9 +128,11 @@ class ProfileEdit extends Component {
             <input id='location' type='text' name='location' value={location} onChange={this.handleChange} />
             <button type='submit'>Edit Profile</button>
           </form>
+
+
           <form onSubmit={this.handleFormPasswordSubmit} className='edit'>
             <label htmlFor='password'>Password</label>
-            <input id='password' type='password' name='password' value={password} onChange={this.handleChange} />
+            <input id='password' type='password' name='password' placeholder='' value={password} onChange={this.handleChange} />
             <p className='like-form-button' onClick={this.showPopUp}>Edit password</p>
             {popUp ? (
               <section className='pop-up wrapper-center'>

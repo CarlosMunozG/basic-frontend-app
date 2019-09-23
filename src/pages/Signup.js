@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
+import { processError } from '../helpers/processError';
 import withAuth from '../components/withAuth.js';
 import GoBackButton from '../components/GoBackButton.js';
 
@@ -10,25 +11,18 @@ class Signup extends Component {
     username: '',
     password: '',
     error: '',
-    message: '',
   };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-    const username = this.state.username;
-    const password = this.state.password;
+    const { username, password } = this.state
     
     this.props.signup({ username, password })
     .then( (user) => {
-      this.setState({
-          username: '',
-          password: '',
-          error:''
-      });
     })
     .catch( error => {
-      this.setState({ error: error.response.data.error }) 
-      console.log(error)
+      this.setState({ error: processError(error.response.status) });
+      console.log(error);
     })
   }
 
@@ -38,7 +32,7 @@ class Signup extends Component {
   }
 
   render() {
-    const { username, password, error, message } = this.state;
+    const { username, password, error } = this.state;
     return (
       <>
       <div className='intro-pos'>
@@ -51,7 +45,6 @@ class Signup extends Component {
             <input id='password' type='password' name='password' value={password} onChange={this.handleChange} placeholder='Password'/>
             <button type='submit'>Sign up</button>
           </form>
-          {message ? <p>{error}</p> : null }
           <Link className='form-link' to={'/login'}>Already have account? <span>Login</span></Link>
           { error && <p className='error-message'>{this.state.error}</p> }
         </div>

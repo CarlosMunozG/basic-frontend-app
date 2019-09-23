@@ -27,6 +27,7 @@ class Place extends Component {
     const userId = this.props.user._id;
     places.getOnePlace(id)
     .then((response) => {
+      console.log(response.data);
       const newPlace = response.data.onePlace;
       const newOwner = response.data.ownerData;
       const newOpinions = response.data.onePlace.opinions;
@@ -179,12 +180,6 @@ class Place extends Component {
                   info={place.locationType}
                 />
 
-                <LinkText2
-                  class='model-block'
-                  title='City - Countryside'
-                  info={place.locationType}
-                />
-                
                 <LinkText2
                   class='model-block'
                   title='Free - Paid'
